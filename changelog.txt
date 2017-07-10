@@ -1,10 +1,4 @@
 ## Change log
 
-### 1.0.0 - 10 July 2017
-* Dev - Added in a CodeKit config file
-* Dev - Changed the structure of the class folder, it now sits inside "includes"
-* Dev - Added in a Autoloader for the classes
-* Dev - Added a namespace for the main class.
-
 ### 1.0.0
 * First Version
