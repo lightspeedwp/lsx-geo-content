@@ -136,6 +136,12 @@
 		"oAP": "\/includes\/{plugin-name}.php",
 		"oF": 0
 		},
+	"\/install.sh": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/install.sh",
+		"oF": 0
+		},
 	"\/LICENSE": {
 		"ft": 8192,
 		"oA": 2,
