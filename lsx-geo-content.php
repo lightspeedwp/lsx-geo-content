@@ -23,12 +23,6 @@ define( 'LSX_GEO_CORE', __FILE__ );
 define( 'LSX_GEO_URL', plugin_dir_url( __FILE__ ) );
 define( 'LSX_GEO_VER', '1.0.0' );
 
-// Template Tags.
-//require_once( LSX_TO_PATH . 'includes/template-tags/general.php' );
-
-// General Includes.
-//require_once( LSX_TO_PATH . 'includes/customizer.php' );
-
 // include context helper & autoloader.
 require_once( LSX_GEO_PATH . 'includes/lsx-geo-content.php' );
 
