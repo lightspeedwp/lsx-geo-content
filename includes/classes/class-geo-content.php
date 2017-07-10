@@ -15,7 +15,6 @@ use lsx\Get_IP;
  */
 class Geo_Content {
 
-
 	/**
 	 * Holds instance of the class
 	 *
@@ -33,7 +32,7 @@ class Geo_Content {
 	 * Constructor.
 	 */
 	public function __construct() {
-		add_action('init', array($this,'locate_user'));
+		add_action( 'init', array( $this, 'locate_user' ) );
 	}
 
 	/**
@@ -64,8 +63,7 @@ class Geo_Content {
 	/**
 	 * @return mixed
 	 */
-	public function getCountry()
-	{
+	public function get_country() {
 		return $this->country;
 	}
 
