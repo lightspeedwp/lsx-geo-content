@@ -32,7 +32,7 @@ class Get_IP {
 	 * Constructor.
 	 */
 	public function __construct() {
-		$this->find_IP();
+		$this->find_ip();
 	}
 
 	/**
@@ -53,8 +53,7 @@ class Get_IP {
 	 *
 	 * @return string | bool
 	 */
-	public function get_IP()
-	{
+	public function get_ip() {
 		return $this->ip;
 	}
 
@@ -63,8 +62,7 @@ class Get_IP {
 	 *
 	 * @return string | bool
 	 */
-	public function get_protocol_version()
-	{
+	public function get_protocol_version() {
 		return $this->protocol;
 	}
 
@@ -72,28 +70,28 @@ class Get_IP {
 	 * Finds the IP of the user from the $_SERVER vars and set the $ip var
 	 * @return void
 	 */
-	public function find_IP()
-	{
-		if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+	public function find_ip() {
+
+		if ( !empty( $_SERVER['HTTP_CLIENT_IP'] ) ) {
 			$ip = $_SERVER['HTTP_CLIENT_IP'];
-		} elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+		} elseif ( !empty( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
 			$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
 		} else {
 			$ip = $_SERVER['REMOTE_ADDR'];
 		}
 
 		//Debug Helper for now.
-		if(isset($_GET['ip'])){
+		if( isset( $_GET['ip'] ) ) {
 			$ip = $_GET['ip'];
 		}
 
 		// if ip contains commas, take first
-		if( strpos($ip, ',') !== FALSE ) {
+		if( strpos($ip, ',') !== false ) {
 			$ip = explode(',', $ip);
 			$ip = trim($ip[0]);
 		}
 
-		if(false !== $this->validate_IP($ip)) {
+		if( false !== $this->validate_ip($ip) ) {
 			$this->ip = $ip;
 		}
 	}
@@ -104,9 +102,8 @@ class Get_IP {
 	 * @param string $ip
 	 * @return string
 	 */
-	public function validate_IP($ip)
-	{
-		if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+	public function validate_ip($ip) {
+		if ( filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) ) {
 			$this->protocol = '6';
 		} elseif (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
 			$this->protocol = '4';
