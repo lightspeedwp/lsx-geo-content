@@ -63,7 +63,9 @@ class Country_Codes {
 			//This will eventually become a setting.
 			$service = 'countryio';
 			if ( isset( $this->apis[ $service ] ) ) {
-				$response = wp_safe_remote_get( $this->apis[ $service ] , array( 'timeout' => 2 ) );
+				$response = wp_safe_remote_get( $this->apis[ $service ] , array(
+					'timeout' => 2
+				) );
 				$this->parse_response( $response );
 			}
 		} else {

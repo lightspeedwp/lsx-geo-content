@@ -65,8 +65,8 @@ class API_Lookup {
 		if ( false === $response ) {
 			//This will eventually become a setting.
 			$service = 'freegeoip';
-			if ( isset ( $this->apis[ $service ] ) ) {
-				$response = wp_safe_remote_get( $this->apis[ $service ] . $ip_address, array( 'timeout' => 2 ) );
+			if ( isset ( $this->apis[$service] ) ) {
+				$response = wp_safe_remote_get( $this->apis[$service] . $ip_address, array( 'timeout' => 2 ) );
 
 				$response = array();
 				$response['body'] = '{"ip":"169.0.145.96","country_code":"ZA","country_name":"South Africa","region_code":"WC","region_name":"Western Cape","city":"Cape Town","zip_code":"7945","time_zone":"Africa/Johannesburg","latitude":-33.9258,"longitude":18.4232,"metro_code":0}';
@@ -85,11 +85,11 @@ class API_Lookup {
 	 * @return void
 	 */
 	public function parse_response( $response ) {
-		if ( ! is_wp_error( $response ) && $response[ 'body' ] ) {
-			$response_decoded = json_decode( $response[ 'body' ] , true );
-			if ( isset( $response_decoded[ 'ip' ] ) ) {
+		if ( ! is_wp_error( $response ) && $response['body'] ) {
+			$response_decoded = json_decode( $response['body'] , true );
+			if ( isset( $response_decoded['ip'] ) ) {
 				$this->location_data = $response_decoded;
-				set_transient( 'lsx_geo_ip_' . $response_decoded[ 'ip' ] , $response_decoded , 60 * 60 );
+				set_transient( 'lsx_geo_ip_' . $response_decoded['ip'] , $response_decoded , 60 * 60 );
 			}
 		}
 	}
@@ -102,8 +102,8 @@ class API_Lookup {
 	 */
 	public function get_field( $index ) {
 		$return = false;
-		if( ! empty( $this->location_data ) && isset( $this->location_data[ $index ] ) ) {
-			$return = $this->location_data[ $index ];
+		if( ! empty( $this->location_data ) && isset( $this->location_data[$index] ) ) {
+			$return = $this->location_data[$index];
 		}
 		return $return;
 	}
