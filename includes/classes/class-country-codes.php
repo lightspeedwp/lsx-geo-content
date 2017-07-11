@@ -22,6 +22,7 @@ class Country_Codes {
 	 * Holds current users location data
 	 */
 	private $data;
+
 	/**
 	 * Holds the array of Geo IP sites and the urls
 	 */
@@ -58,7 +59,7 @@ class Country_Codes {
 
 		$response = get_option( 'lsx_geo_ip_country_data' , false);
 
-		if( false === $response ) {
+		if ( false === $response ) {
 			//This will eventually become a setting.
 			$service = 'countryio';
 			if (isset($this->apis[$service])) {

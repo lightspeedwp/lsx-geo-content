@@ -26,6 +26,9 @@ define( 'LSX_GEO_VER', '1.0.0' );
 // include context helper & autoloader.
 require_once( LSX_GEO_PATH . 'includes/lsx-geo-content.php' );
 
+// include the template tags
+require_once( LSX_GEO_PATH . 'includes/template-tags.php' );
+
 // Register tour operator autoloader.
 spl_autoload_register( 'lsx_geo_content_autoload_class', true, false );
 

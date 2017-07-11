@@ -25,9 +25,9 @@ class Geo_Content {
 	private static $instance;
 
 	/**
-	 * Holds the current users country
+	 * Holds api_lookup instance with all the location data
 	 */
-	private $country;
+	private $api_lookup = false;
 
 	/**
 	 * Constructor.
@@ -61,13 +61,26 @@ class Geo_Content {
 	 * @return  void
 	 */
 	public function locate_user() {
-		\lsx\API_Lookup::init();
+		$this->api_lookup = \lsx\API_Lookup::init();
 	}
 
 	/**
-	 * @return mixed
+	 * Check if the current users country code against the one supplied.
+	 *
+	 * @param $country_code string
+	 * @return boolean
 	 */
-	public function get_country() {
-		return $this->country;
+	public function check_country( $country_code = '' ) {
+		$country = '';
+		if ( false !== $this->api_lookup ) {
+			$country = $this->api_lookup->get_field('country_code');
+		}
+
+		if ( '' !== $country_code && $country_code === $country ) {
+			return true;
+		} else {
+			return false;
+		}
 	}
+
 }

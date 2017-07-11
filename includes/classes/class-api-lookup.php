@@ -22,7 +22,7 @@ class API_Lookup {
 	/**
 	 * Holds current users location data
 	 */
-	private $location_data;
+	private $location_data = array();
 
 	/**
 	 * Holds the array of Geo IP sites and the urls
@@ -92,5 +92,19 @@ class API_Lookup {
 				set_transient( 'lsx_geo_ip_' . $response_decoded[ 'ip' ] , $response_decoded , 60 * 60 );
 			}
 		}
+	}
+
+	/**
+	 * Return a field from the location data
+	 *
+	 * @param $index string
+	 * @return mixed
+	 */
+	public function get_field( $index ) {
+		$return = false;
+		if( ! empty( $this->location_data ) && isset( $this->location_data[ $index ] ) ){
+			$return = $this->location_data[ $index ];
+		}
+		return $return;
 	}
 }
