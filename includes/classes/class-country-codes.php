@@ -64,7 +64,7 @@ class Country_Codes {
 			$service = 'countryio';
 			if ( isset( $this->apis[ $service ] ) ) {
 				$response = wp_safe_remote_get( $this->apis[ $service ] , array(
-					'timeout' => 2
+					'timeout' => 2,
 				) );
 				$this->parse_response( $response );
 			}
@@ -80,8 +80,8 @@ class Country_Codes {
 	 * @return void
 	 */
 	public function parse_response( $response ) {
-		if ( ! is_wp_error( $response ) && $response[ 'body' ] ) {
-			$response_decoded = json_decode( $response[ 'body' ] , true );
+		if ( ! is_wp_error( $response ) && $response['body'] ) {
+			$response_decoded = json_decode( $response['body'] , true );
 			if ( false !== $response_decoded && '' !== $response_decoded ) {
 				asort( $response_decoded );
 				$this->data = $response_decoded;
