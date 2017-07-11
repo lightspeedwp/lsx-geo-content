@@ -2,7 +2,7 @@
 
 namespace lsx;
 
-use lsx\Get_IP;
+use lsx\API_Lookup;
 
 /**
  * Geo_Content Main Class
@@ -57,7 +57,7 @@ class Geo_Content {
 	 * @return  void
 	 */
 	public function locate_user() {
-		$ip_obj = \lsx\Get_IP::init();
+		\lsx\API_Lookup::init();
 	}
 
 	/**
@@ -66,5 +66,4 @@ class Geo_Content {
 	public function get_country() {
 		return $this->country;
 	}
-
 }
