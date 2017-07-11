@@ -57,17 +57,16 @@ class Country_Codes {
 	 */
 	public function lookup() {
 
-		$response = get_option( 'lsx_geo_ip_country_data' , false);
+		$response = get_option( 'lsx_geo_ip_country_data' , false );
 
 		if ( false === $response ) {
 			//This will eventually become a setting.
 			$service = 'countryio';
-			if (isset($this->apis[$service])) {
-				$response = wp_safe_remote_get($this->apis[$service] , array('timeout' => 2));
-
-				$this->parse_response($response);
+			if ( isset( $this->apis[ $service ] ) ) {
+				$response = wp_safe_remote_get( $this->apis[ $service ] , array( 'timeout' => 2 ) );
+				$this->parse_response( $response );
 			}
-		}else{
+		} else {
 			$this->data = $response;
 		}
 	}
