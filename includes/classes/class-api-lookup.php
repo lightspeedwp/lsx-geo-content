@@ -102,7 +102,7 @@ class API_Lookup {
 	 */
 	public function get_field( $index ) {
 		$return = false;
-		if( ! empty( $this->location_data ) && isset( $this->location_data[ $index ] ) ){
+		if( ! empty( $this->location_data ) && isset( $this->location_data[ $index ] ) ) {
 			$return = $this->location_data[ $index ];
 		}
 		return $return;

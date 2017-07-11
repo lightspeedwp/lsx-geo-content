@@ -73,7 +73,7 @@ class Geo_Content {
 	public function check_country( $country_code = '' ) {
 		$country = '';
 		if ( false !== $this->api_lookup ) {
-			$country = $this->api_lookup->get_field('country_code');
+			$country = $this->api_lookup->get_field( 'country_code' );
 		}
 
 		if ( '' !== $country_code && $country_code === $country ) {
