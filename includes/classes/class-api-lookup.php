@@ -20,6 +20,11 @@ class API_Lookup {
 	private static $instance;
 
 	/**
+	 * Holds current users location data
+	 */
+	private $location_data;
+
+	/**
 	 * Holds the array of Geo IP sites and the urls
 	 */
 	private $apis = array(
@@ -55,15 +60,21 @@ class API_Lookup {
 		$ip_obj = \lsx\Get_IP::init();
 		$ip_address = $ip_obj->get_ip();
 
-		//This will eventually become a setting.
-		$service = 'freegeoip';
-		if ( isset( $this->apis[ $service ] ) ) {
-			$response = wp_safe_remote_get( $this->apis[ $service ] . $ip_address, array( 'timeout' => 2 ) );
+		$response = get_transient( 'lsx_geo_ip_' . $ip_address );
 
-			$response = array();
-			$response['body'] = '{"ip":"169.0.145.96","country_code":"ZA","country_name":"South Africa","region_code":"WC","region_name":"Western Cape","city":"Cape Town","zip_code":"7945","time_zone":"Africa/Johannesburg","latitude":-33.9258,"longitude":18.4232,"metro_code":0}';
+		if( false === $response ) {
+			//This will eventually become a setting.
+			$service = 'freegeoip';
+			if (isset($this->apis[$service])) {
+				$response = wp_safe_remote_get($this->apis[$service] . $ip_address, array('timeout' => 2));
 
-			$this->parse_response( $response );
+				$response = array();
+				$response['body'] = '{"ip":"169.0.145.96","country_code":"ZA","country_name":"South Africa","region_code":"WC","region_name":"Western Cape","city":"Cape Town","zip_code":"7945","time_zone":"Africa/Johannesburg","latitude":-33.9258,"longitude":18.4232,"metro_code":0}';
+
+				$this->parse_response($response);
+			}
+		}else{
+			$this->location_data = $response;
 		}
 	}
 
@@ -75,9 +86,10 @@ class API_Lookup {
 	 */
 	public function parse_response( $response ) {
 		if ( ! is_wp_error( $response ) && $response[ 'body' ] ) {
-			$response_decoded = json_decode( $response[ 'body' ] );
-			if ( isset( $response_decoded->ip ) ) {
-				set_transient( 'lsx_geo_ip_' . $response_decoded->ip , 60 * 60 );
+			$response_decoded = json_decode( $response[ 'body' ] , true );
+			if ( isset( $response_decoded[ 'ip' ] ) ) {
+				$this->location_data = $response_decoded;
+				set_transient( 'lsx_geo_ip_' . $response_decoded[ 'ip' ] , $response_decoded , 60 * 60 );
 			}
 		}
 	}
