@@ -3,6 +3,7 @@
 namespace lsx;
 
 use lsx\API_Lookup;
+use lsx\Country_Codes;
 
 /**
  * Geo_Content Main Class
@@ -33,6 +34,9 @@ class Geo_Content {
 	 */
 	public function __construct() {
 		add_action( 'init', array( $this, 'locate_user' ) );
+
+		//Load the variables
+		\lsx\Country_Codes::init();
 	}
 
 	/**
