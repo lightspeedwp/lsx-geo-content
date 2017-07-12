@@ -46,7 +46,7 @@ class Geo_Settings {
 			'page_title'        => false,
 			'page_description'  => false,
 			'menu_title'        => __( 'Geo Content' ,'lsx-geo-content' ),
-			'template'          => LSX_GEO_PATH.'includes/partials/geo-content.php',
+			'template'          => LSX_GEO_PATH . 'includes/partials/geo-content.php',
 			'default'	 		=> false,
 		);
 		return $tabs;
