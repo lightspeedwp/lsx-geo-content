@@ -5,6 +5,8 @@ namespace lsx;
 use lsx\API_Lookup;
 use lsx\Country_Codes;
 use lsx\WPML_Integration;
+use lsx\Geo_Settings;
+
 
 /**
  * Geo_Content Main Class
@@ -35,6 +37,9 @@ class Geo_Content {
 	 */
 	public function __construct() {
 		add_action( 'init', array( $this, 'locate_user' ) );
+
+		//Settings
+		\lsx\Geo_Settings::init();
 
 		//Load the variables
 		\lsx\Country_Codes::init();
