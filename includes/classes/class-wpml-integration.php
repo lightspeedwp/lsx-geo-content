@@ -22,7 +22,7 @@ class WPML_Integration {
 	 * Constructor.
 	 */
 	public function __construct() {
-		apply_filters( 'wpml_current_language', array( $this , 'set_user_location' ) ,10 ,1 );
+		apply_filters( 'wpml_current_language', array( $this, 'set_user_location' ) ,10 ,1 );
 	}
 
 	/**

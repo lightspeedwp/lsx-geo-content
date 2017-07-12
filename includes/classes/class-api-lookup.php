@@ -61,8 +61,8 @@ class API_Lookup {
 		$ip_address = $ip_obj->get_ip();
 		$response = false;
 
-		if ( !defined( 'WP_DEBUG' ) || false === WP_DEBUG ) {
-			$response = get_transient('lsx_geo_ip_' . $ip_address);
+		if ( ! defined( 'WP_DEBUG' ) || false === WP_DEBUG ) {
+			$response = get_transient( 'lsx_geo_ip_' . $ip_address );
 		}
 
 		if ( false === $response ) {
@@ -75,10 +75,10 @@ class API_Lookup {
 
 				if ( defined( 'WP_DEBUG' ) && true === WP_DEBUG ) {
 					$response = array();
-					if ( ! isset( $_GET[ 'country' ] ) ) {
+					if ( ! isset( $_GET['country'] ) ) {
 						$response['body'] = '{"ip":"169.0.145.96","country_code":"ZA","country_name":"South Africa","region_code":"WC","region_name":"Western Cape","city":"Cape Town","zip_code":"7945","time_zone":"Africa/Johannesburg","latitude":-33.9258,"longitude":18.4232,"metro_code":0}';
 					} elseif ( 'US' === $_GET[ 'country' ] ) {
-						$response[ 'body' ] = '{"ip":"100.0.145.96","country_code":"US","country_name":"United States","region_code":"MA","region_name":"Massachusetts","city":"Worcester","zip_code":"01609","time_zone":"America/New_York","latitude":42.2857,"longitude":-71.8292,"metro_code":506}';
+						$response['body'] = '{"ip":"100.0.145.96","country_code":"US","country_name":"United States","region_code":"MA","region_name":"Massachusetts","city":"Worcester","zip_code":"01609","time_zone":"America/New_York","latitude":42.2857,"longitude":-71.8292,"metro_code":506}';
 					}
 				}
 

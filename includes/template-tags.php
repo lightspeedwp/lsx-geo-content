@@ -41,8 +41,8 @@ function lsx_geo_content_shortcode( $atts, $content = null ) {
 	), $atts );
 
 	$return = '';
-	if ( 'all' === $data[ 'country' ] || lsx_geo_is_country( $data[ 'country' ] ) ){
-		$return = $data[ 'opening_tag' ] . $content . $data[ 'closing_tag' ];
+	if ( 'all' === $data['country'] || lsx_geo_is_country( $data['country'] ) ){
+		$return = $data['opening_tag'] . $content . $data['closing_tag'];
 	}
 	return $return;
 }
