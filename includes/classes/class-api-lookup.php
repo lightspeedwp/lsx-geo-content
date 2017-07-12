@@ -70,8 +70,10 @@ class API_Lookup {
 					'timeout' => 2,
 				) );
 
-				$response = array();
-				$response['body'] = '{"ip":"169.0.145.96","country_code":"ZA","country_name":"South Africa","region_code":"WC","region_name":"Western Cape","city":"Cape Town","zip_code":"7945","time_zone":"Africa/Johannesburg","latitude":-33.9258,"longitude":18.4232,"metro_code":0}';
+				if ( defined( 'WP_DEBUG' ) && true === WP_DEBUG ) {
+					$response = array();
+					$response['body'] = '{"ip":"169.0.145.96","country_code":"ZA","country_name":"South Africa","region_code":"WC","region_name":"Western Cape","city":"Cape Town","zip_code":"7945","time_zone":"Africa/Johannesburg","latitude":-33.9258,"longitude":18.4232,"metro_code":0}';
+				}
 
 				$this->parse_response( $response );
 			}

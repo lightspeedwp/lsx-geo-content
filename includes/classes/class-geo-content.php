@@ -4,6 +4,7 @@ namespace lsx;
 
 use lsx\API_Lookup;
 use lsx\Country_Codes;
+use lsx\WPML_Integration;
 
 /**
  * Geo_Content Main Class
@@ -37,6 +38,9 @@ class Geo_Content {
 
 		//Load the variables
 		\lsx\Country_Codes::init();
+
+		//WPML Integration
+		\lsx\WPML_Integration::init();
 	}
 
 	/**
