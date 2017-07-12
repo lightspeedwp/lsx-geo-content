@@ -30,6 +30,8 @@ function lsx_geo_content_autoload_class( $class ) {
 				$path .= '/' . implode( '/', $parts );
 			}
 			$class_file = $path . $name . '/class-' . $file . '.php';
+
+			print_r($class_file);
 			if ( file_exists( $class_file ) ) {
 				include_once $class_file;
 

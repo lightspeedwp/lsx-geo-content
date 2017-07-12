@@ -6,7 +6,7 @@ use lsx\API_Lookup;
 use lsx\Country_Codes;
 use lsx\WPML_Integration;
 use lsx\Geo_Settings;
-
+use lsx\CF_Geo_Filters;
 
 /**
  * Geo_Content Main Class
@@ -46,6 +46,9 @@ class Geo_Content {
 
 		//WPML Integration
 		\lsx\WPML_Integration::init();
+
+		//Caldera Forms Integration
+		\lsx\CF_Geo_Filters::init();
 	}
 
 	/**
