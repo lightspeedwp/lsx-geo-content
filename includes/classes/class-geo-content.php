@@ -109,7 +109,9 @@ class Geo_Content {
 			'id' => 'user-geo-location', // link ID, defaults to a sanitized title value
 			'title' => esc_attr__( 'Geo Location', 'lsx-geo-content' ), // link title
 			'href' => '', // name of file
-			'meta' => array( 'html' => '<span>Hello</span>' ),
+			'meta' => array(
+				'html' => '<span>Hello</span>',
+				),
 		));
 	}
 }

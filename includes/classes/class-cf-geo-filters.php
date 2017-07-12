@@ -71,7 +71,7 @@ class CF_Geo_Filters {
 			$country_code = $api_obj->get_field( 'country_code' );
 
 			$default = false;
-			foreach( $field['config']['option'] as $key => $values ) {
+			foreach ( $field['config']['option'] as $key => $values ) {
 				if ( in_array( $country_name , $values ) || in_array( $country_code , $values ) ) {
 					$default = $key;
 				}
@@ -84,9 +84,9 @@ class CF_Geo_Filters {
 	}
 
 
-	public function filter_form_output($html, $entry_id, $form ){
-		if( isset( $form['fields'] ) && ! empty( $form['fields'] ) ){
-			foreach( $form['fields'] as $field ){
+	public function filter_form_output( $html, $entry_id, $form ) {
+		if( isset( $form['fields'] ) && ! empty( $form['fields'] ) ) {
+			foreach ( $form['fields'] as $field ) {
 
 				switch ( $field['type'] ) {
 					case 'text':
@@ -95,10 +95,7 @@ class CF_Geo_Filters {
 					default:
 						break;
 				}
-
 			}
-			//print_r($form);
-			//die();
 		}
 		return $html;
 	}
