@@ -49,6 +49,8 @@ class Geo_Content {
 
 		//Caldera Forms Integration
 		\lsx\CF_Geo_Filters::init();
+
+		add_action( 'wp_before_admin_bar_render', 'mytheme_admin_bar_render' );
 	}
 
 	/**
@@ -95,4 +97,19 @@ class Geo_Content {
 		}
 	}
 
+	/**
+	 * Adds an info box to the "My Account" dropdown
+	 *
+	 * @return void
+	 */
+	public function admin_bar_info_box() {
+		global $wp_admin_bar;
+		$wp_admin_bar->add_menu( array(
+			'parent' => 'my-account', // use 'false' for a root menu, or pass the ID of the parent menu
+			'id' => 'user-geo-location', // link ID, defaults to a sanitized title value
+			'title' => esc_attr__( 'Geo Location', 'lsx-geo-content' ), // link title
+			'href' => '', // name of file
+			'meta' => array( 'html' => '<span>Hello</span>' ),
+		));
+	}
 }
