@@ -82,21 +82,4 @@ class CF_Geo_Filters {
 		}
 		return $field;
 	}
-
-
-	public function filter_form_output( $html, $entry_id, $form ) {
-		if( isset( $form['fields'] ) && ! empty( $form['fields'] ) ) {
-			foreach ( $form['fields'] as $field ) {
-
-				switch ( $field['type'] ) {
-					case 'text':
-						break;
-
-					default:
-						break;
-				}
-			}
-		}
-		return $html;
-	}
 }
