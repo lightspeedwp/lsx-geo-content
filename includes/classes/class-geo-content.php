@@ -53,7 +53,7 @@ class Geo_Content {
 
 		add_action( 'wp_before_admin_bar_render', array( $this, 'admin_bar_info_box' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'assets' ) );
-		add_action( 'enqueue_scripts', array( $this, 'assets' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'assets' ) );
 	}
 
 	/**
