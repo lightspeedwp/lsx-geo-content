@@ -32,6 +32,11 @@ class API_Lookup {
 	);
 
 	/**
+	 * Holds the array of field keys
+	 */
+	private $fields = array( 'ip', 'country_name', 'country_code', 'region_code', 'region_name', 'city', 'zip_code', 'metro_code', 'time_zone', 'latitude', 'longitude' );
+
+	/**
 	 * Constructor.
 	 */
 	public function __construct() {
@@ -117,5 +122,14 @@ class API_Lookup {
 			$return = $this->location_data[ $index ];
 		}
 		return $return;
+	}
+
+	/**
+	 * Returns the array of fields
+	 *
+	 * @return array
+	 */
+	public function get_fields() {
+		return $this->fields;
 	}
 }

@@ -51,7 +51,9 @@ class Geo_Content {
 		//Caldera Forms Integration
 		\lsx\CF_Geo_Filters::init();
 
-		add_action( 'wp_before_admin_bar_render', 'mytheme_admin_bar_render' );
+		add_action( 'wp_before_admin_bar_render', array( $this, 'admin_bar_info_box' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'assets' ) );
+		add_action( 'enqueue_scripts', array( $this, 'assets' ) );
 	}
 
 	/**
@@ -75,9 +77,20 @@ class Geo_Content {
 	 *
 	 * @return  void
 	 */
+	public function assets() {
+		wp_enqueue_style( 'lsx-geo-content-style', LSX_GEO_URL . 'assets/css/geo-content.css', array(), LSX_GEO_VER );
+	}
+
+	/**
+	 * Grabs the Users IP Address and Checks the APIs for the location
+	 *
+	 * @return  void
+	 */
 	public function locate_user() {
 		$this->api_lookup = \lsx\API_Lookup::init();
 	}
+
+
 
 	/**
 	 * Check if the current users country code against the one supplied.
@@ -108,11 +121,27 @@ class Geo_Content {
 		$wp_admin_bar->add_menu( array(
 			'parent' => 'my-account', // use 'false' for a root menu, or pass the ID of the parent menu
 			'id' => 'user-geo-location', // link ID, defaults to a sanitized title value
-			'title' => esc_attr__( 'Geo Location', 'lsx-geo-content' ), // link title
+			'title' => esc_attr__( 'Location', 'lsx-geo-content' ), // link title
 			'href' => '', // name of file
 			'meta' => array(
-				'html' => '<span>Hello</span>',
+				'html' => $this->generate_info_box(),
 				),
 		));
+	}
+
+	/**
+	 * Generates the HTML for the Admin Bar info box.
+	 *
+	 * @return string
+	 */
+	public function generate_info_box() {
+		$info_box_fields = array( 'ip', 'country_name', 'region_name', 'city' );
+		$output = '<div class="lsx-geo-info"><ul>';
+		foreach( $info_box_fields as $field ) {
+			$output .= '<li class="' . $field . '">' . $this->api_lookup->get_field( $field ) . '</li>';
+		}
+		$output .= '<li class="coordinates">' . $this->api_lookup->get_field( 'latitude' ) . ', ' . $this->api_lookup->get_field( 'longitude' ) . '</li>';
+		$output .= '</ul></div>';
+		return $output;
 	}
 }
