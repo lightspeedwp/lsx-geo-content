@@ -21,11 +21,22 @@ class CF_Geo_Filters {
 	private static $instance;
 
 	/**
+	 * Holds instance of the api lookup class
+	 */
+	private $api_obj = false;
+
+	/**
+	 * Holds the array of classes available
+	 */
+	private $classes = array( 'lsx-geo-ip', 'lsx-geo-country', 'lsx-geo-region', 'lsx-geo-zip-code', 'lsx-geo-metro-code', 'lsx-geo-city', 'lsx-geo-latitude', 'lsx-geo-longitude' );
+
+	/**
 	 * Constructor.
 	 */
 	public function __construct() {
 		add_filter( 'caldera_forms_render_get_field_type-text', array( $this, 'text_field_placeholder' ) );
 		add_filter( 'caldera_forms_render_get_field_type-dropdown', array( $this, 'dropdown_field_placeholder' ) );
+		$this->api_obj = \lsx\API_Lookup::init();
 	}
 
 	/**
@@ -48,12 +59,17 @@ class CF_Geo_Filters {
 	 * @return string
 	 */
 	public function text_field_placeholder( $field ) {
-		$translatable_country = esc_attr__( 'Country', 'lsx-geo-content' );
-		if ( $translatable_country === $field['label'] ) {
-			$api_obj = \lsx\API_Lookup::init();
-			$country_name = $api_obj->get_field( 'country_name' );
-			$field['config']['default'] = $country_name;
+
+		if ( '' !== $field['config']['custom_class'] && in_array( $field['config']['custom_class'] , $this->classes ) ) {
+			$key = str_replace( 'lsx-geo-', '', $field['config']['custom_class'] );
+			$key = str_replace( '-', '_', $key );
+			if ( 'country' === $key || 'region' === $key ) {
+				$key .= '_name';
+			}
+			$default = $this->api_obj->get_field( $key );
+			$field['config']['default'] = $default;
 		}
+
 		return $field;
 	}
 
@@ -64,20 +80,36 @@ class CF_Geo_Filters {
 	 * @return string
 	 */
 	public function dropdown_field_placeholder( $field ) {
-		$translatable_country = esc_attr__( 'Country', 'lsx-geo-content' );
-		if ( $translatable_country === $field['label'] ) {
-			$api_obj = \lsx\API_Lookup::init();
-			$country_name = $api_obj->get_field( 'country_name' );
-			$country_code = $api_obj->get_field( 'country_code' );
 
-			$default = false;
-			foreach ( $field['config']['option'] as $key => $values ) {
-				if ( in_array( $country_name , $values ) || in_array( $country_code , $values ) ) {
-					$default = $key;
-				}
+		if ( '' !== $field['config']['custom_class'] && in_array( $field['config']['custom_class'] , $this->classes ) ) {
+
+			$needles = array();
+			$index_key = str_replace( 'lsx-geo-', '', $field['config']['custom_class'] );
+
+			switch ( $field['config']['custom_class'] ) {
+				case 'lsx-geo-country':
+				case 'lsx-geo-region':
+					$needles[] = $this->api_obj->get_field( $index_key . '_name' );
+					$needles[] = $this->api_obj->get_field( $index_key . '_code' );
+					break;
+
+				case 'lsx-geo-city':
+				case 'lsx-geo-latitude':
+				case 'lsx-geo-longitude':
+				case 'lsx-geo-metro-code':
+				case 'lsx-geo-postal-code':
+				$index_key = str_replace( '-', '_', $index_key );
+					$needles[] = $this->api_obj->get_field( $index_key . '_name' );
+					break;
+
+				default:
+					break;
 			}
-			if ( false !== $default ) {
-				$field['config']['default'] = $default;
+
+			foreach ( $field['config']['option'] as $key => $values ) {
+				if( ! empty( array_intersect( $needles, $values ) ) ) {
+					$field['config']['default'] = $key;
+				}
 			}
 		}
 		return $field;
