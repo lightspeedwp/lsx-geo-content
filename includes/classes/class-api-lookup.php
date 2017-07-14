@@ -28,7 +28,7 @@ class API_Lookup {
 	 * Holds the array of Geo IP sites and the urls
 	 */
 	private $apis = array(
-		'freegeoip'  => 'https://freegeoip.net/json/',
+		'freegeoip'  => '://freegeoip.net/json/',
 	);
 
 	/**
@@ -74,7 +74,19 @@ class API_Lookup {
 			//This will eventually become a setting.
 			$service = 'freegeoip';
 			if ( isset( $this->apis[ $service ] ) ) {
-				$response = file_get_contents( $this->apis[ $service ] . $ip_address );
+
+				$protocol = 'http';
+				if ( is_ssl() ) {
+					$protocol .= 's';
+				}
+				$response = file_get_contents( $protocol . $this->apis[ $service ] . $ip_address );
+
+				/*if ( ! isset( $_GET['country'] ) ) {
+					$response = '{"ip":"169.0.145.96","country_code":"ZA","country_name":"South Africa","region_code":"WC","region_name":"Western Cape","city":"Cape Town","zip_code":"7945","time_zone":"Africa/Johannesburg","latitude":-33.9258,"longitude":18.4232,"metro_code":0}';
+				} elseif ( 'US' === $_GET['country'] ) {
+					$response = '{"ip":"100.0.145.96","country_code":"US","country_name":"United States","region_code":"MA","region_name":"Massachusetts","city":"Worcester","zip_code":"01609","time_zone":"America/New_York","latitude":42.2857,"longitude":-71.8292,"metro_code":506}';
+				}*/
+
 				$this->parse_response( $response );
 			}
 		} else {

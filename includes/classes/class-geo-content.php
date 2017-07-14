@@ -90,7 +90,15 @@ class Geo_Content {
 		$this->api_lookup = \lsx\API_Lookup::init();
 	}
 
-
+	/**
+	 * Gets a field from the API lookup object
+	 *
+	 * @param $key string
+	 * @return  string
+	 */
+	public function get_field( $key ) {
+		return $this->api_lookup->get_field( $key );
+	}
 
 	/**
 	 * Check if the current users country code against the one supplied.
