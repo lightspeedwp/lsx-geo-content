@@ -137,7 +137,7 @@ class Geo_Content {
 	public function generate_info_box() {
 		$info_box_fields = array( 'ip', 'country_name', 'region_name', 'city' );
 		$output = '<div class="lsx-geo-info"><ul>';
-		foreach( $info_box_fields as $field ) {
+		foreach ( $info_box_fields as $field ) {
 			$output .= '<li class="' . $field . '">' . $this->api_lookup->get_field( $field ) . '</li>';
 		}
 		$output .= '<li class="coordinates">' . $this->api_lookup->get_field( 'latitude' ) . ', ' . $this->api_lookup->get_field( 'longitude' ) . '</li>';

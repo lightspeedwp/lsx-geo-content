@@ -98,7 +98,7 @@ class CF_Geo_Filters {
 				case 'lsx-geo-longitude':
 				case 'lsx-geo-metro-code':
 				case 'lsx-geo-postal-code':
-				$index_key = str_replace( '-', '_', $index_key );
+					$index_key = str_replace( '-', '_', $index_key );
 					$needles[] = $this->api_obj->get_field( $index_key . '_name' );
 					break;
 
