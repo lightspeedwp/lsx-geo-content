@@ -107,7 +107,7 @@ class CF_Geo_Filters {
 			}
 
 			foreach ( $field['config']['option'] as $key => $values ) {
-				if( ! empty( array_intersect( $needles, $values ) ) ) {
+				if ( ! empty( array_intersect( $needles, $values ) ) ) {
 					$field['config']['default'] = $key;
 				}
 			}
