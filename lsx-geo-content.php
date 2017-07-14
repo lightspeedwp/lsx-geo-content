@@ -1,6 +1,6 @@
 <?php
 /*
- * Plugin Name: LSX GEO Content
+ * Plugin Name: LSX Geo Content
  * Plugin URI: https://www.lsdev.biz/product/lsx-geo-content/
  * Description:
  * Tags: lsx , geo content
