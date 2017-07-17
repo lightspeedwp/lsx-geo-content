@@ -171,7 +171,7 @@ class Geo_Nav_Filters {
 	 */
 	private function exclude_menu_item( $key ) {
 		if ( ! empty( $this->matches ) && isset( $this->matches[1] ) && $this->matches[1] === $this->user_country_code ) {
-			unset( $this->menu[$key] );
+			unset( $this->menu[ $key ] );
 		}
 	}
 
