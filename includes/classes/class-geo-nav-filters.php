@@ -2,6 +2,8 @@
 
 namespace lsx;
 
+use lsx\API_Lookup;
+
 /**
  * Geo_Nav_Filters Main Class
  *
@@ -29,15 +31,37 @@ class Geo_Nav_Filters {
 	private $matches = array();
 
 	/**
-	 * A boolean var enabled if there is a
+	 * Holds current lsx-geo parent
 	 */
-	private $has_geo_content = false;
+	private $geo_items = array();
+
+	/**
+	 * The users current country code
+	 */
+	private $user_country_code = false;
+
+	/**
+	 * Holds the current menus default item
+	 */
+	private $default = array();
+
+	/**
+	 * Holds the menu item that should display for this country
+	 */
+	private $selected = array();
+
+	/**
+	 * Holds the current menus parent item
+	 */
+	private $parent = array();
 
 	/**
 	 * Constructor.
 	 */
 	public function __construct() {
 		add_filter( 'wp_nav_menu_objects', array( $this, 'filter_nav_menu' ), 20, 2 );
+		$api_lookup = \lsx\API_Lookup::init();
+		$this->user_country_code = strtolower( $api_lookup->get_field( 'country_code' ) );
 	}
 
 	/**
@@ -54,6 +78,15 @@ class Geo_Nav_Filters {
 	}
 
 	/**
+	 * Return an instance of this class.
+	 */
+	public function reset_variables() {
+		$this->default = array();
+		$this->selected = array();
+		$this->parent = array();
+	}
+
+	/**
 	 * Moves the current languages phone number to the top of the menu
 	 *
 	 * @param array $sorted_menu_items
@@ -63,18 +96,36 @@ class Geo_Nav_Filters {
 	 */
 	public function filter_nav_menu( $sorted_menu_items, $args ) {
 		$this->menu = $sorted_menu_items;
+		if ( ! empty( $this->menu ) ) {
+			$this->loop_through_menu_items();
+			$this->set_new_parent();
+			$this->reset_variables();
+		}
+		$sorted_menu_items = $this->menu;
+		return $sorted_menu_items;
+	}
+
+	/**
+	 * Run through the menu items and check for the ".lsx-geo" class,  then take certain actions base don those classes.
+	 *
+	 * @return void
+	 */
+	private function loop_through_menu_items() {
 		foreach ( $this->menu as $menu_key => $menu_item ) {
 			if ( in_array( 'lsx-geo', $menu_item->classes ) ) {
-				if ( $this->check_items( $menu_item->classes, "/lsx-geo-ex-(.*)/" ) ) {
+				$this->matches = array();
+
+				if ( $this->check_items( $menu_item->classes, "/lsx-geo-parent/" ) ) {
+					$this->set_current_parent( $menu_key, $menu_item );
+				} else if ( $this->check_items( $menu_item->classes, "/lsx-geo-default/" ) ) {
+					$this->set_default_item( $menu_key, $menu_item );
+				} else if ( $this->check_items( $menu_item->classes, "/lsx-geo-ex-(.*)/" ) ) {
 					$this->exclude_menu_item( $menu_key );
 				} else if ( $this->check_items( $menu_item->classes, "/lsx-geo-(.*)/" ) ) {
-
+					$this->check_for_selection( $menu_key, $menu_item );
 				}
 			}
 		}
-
-		$sorted_menu_items = $this->menu;
-		return $sorted_menu_items;
 	}
 
 	/**
@@ -119,6 +170,70 @@ class Geo_Nav_Filters {
 	 * @return void
 	 */
 	private function exclude_menu_item( $key ) {
-		unset( $this->menu[ $key ] );
+		if ( ! empty( $this->matches ) && isset( $this->matches[1] ) && $this->matches[1] === $this->user_country_code ) {
+			unset( $this->menu[$key] );
+		}
+	}
+
+	/**
+	 * Check an item to see if it should replace the parent
+	 *
+	 * @param string $key
+	 * @param array $item
+	 * @return void
+	 */
+	private function check_for_selection( $key , $item ) {
+		if ( ! empty( $this->matches ) && $this->matches[1] === $this->user_country_code ) {
+			$this->selected['key'] = $key;
+			$this->selected['obj'] = $item;
+			$this->exclude_menu_item( $key );
+		}
+	}
+
+	/**
+	 * Sets the current parent menu item
+	 *
+	 * @param string $key
+	 * @param array $item
+	 * @return void
+	 */
+	private function set_current_parent( $key , $item ) {
+		$this->parent['key'] = $key;
+		$this->parent['obj'] = $item;
+	}
+
+	/**
+	 * Sets the current default menu item, to show if there arn't any "selections"
+	 *
+	 * @param string $key
+	 * @param array $item
+	 * @return void
+	 */
+	private function set_default_item( $key , $item ) {
+		$this->default['key'] = $key;
+		$this->default['obj'] = $item;
+	}
+
+	/**
+	 * Sets the label and url of the parent if there is a "selected" or "default" item.
+	 *
+	 * @return void
+	 */
+	private function set_new_parent() {
+
+		if ( !empty( $this->parent ) ){
+			$new_parent = false;
+			if ( ! empty( $this->selected )  ) {
+				$new_parent = $this->selected;
+			} else if ( ! empty( $this->default ) ) {
+				$new_parent = $this->default;
+				unset($this->menu[ $new_parent['key'] ] );
+			}
+
+			if ( false !== $new_parent ) {
+				$this->menu[ $this->parent['key'] ]->title = $new_parent['obj']->title;
+				$this->menu[ $this->parent['key'] ]->url = $new_parent['obj']->url;
+			}
+		}
 	}
 }

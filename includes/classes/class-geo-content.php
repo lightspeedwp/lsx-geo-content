@@ -38,7 +38,8 @@ class Geo_Content {
 	 * Constructor.
 	 */
 	public function __construct() {
-		add_action( 'init', array( $this, 'locate_user' ) );
+		//Load the User Details
+		$this->api_lookup = \lsx\API_Lookup::init();
 
 		//Settings
 		\lsx\Geo_Settings::init();
@@ -83,15 +84,6 @@ class Geo_Content {
 	 */
 	public function assets() {
 		wp_enqueue_style( 'lsx-geo-content-style', LSX_GEO_URL . 'assets/css/geo-content.css', array(), LSX_GEO_VER );
-	}
-
-	/**
-	 * Grabs the Users IP Address and Checks the APIs for the location
-	 *
-	 * @return  void
-	 */
-	public function locate_user() {
-		$this->api_lookup = \lsx\API_Lookup::init();
 	}
 
 	/**
