@@ -26,14 +26,14 @@ class Geo_Nav_Filters {
 	private $menu;
 
 	/**
-	 * Holds the matches of the string search
+	 * Holds the matches of the preg_match statement
 	 */
 	private $matches = array();
 
 	/**
-	 * Holds current lsx-geo parent
+	 * Holds the current menu items matched
 	 */
-	private $geo_items = array();
+	private $matched_countries = array();
 
 	/**
 	 * The users current country code
@@ -137,12 +137,18 @@ class Geo_Nav_Filters {
 	 */
 	public function check_items( $classes , $pattern ) {
 		$return = false;
+		$matched_countries = array();
 		foreach ( $classes as $class ) {
-			$return = $this->search_string( $class, $pattern );
-			if ( true === $return ) {
-				return $return;
+			$search = $this->search_string( $class, $pattern );
+
+			if ( true === $search ) {
+				if ( isset( $this->matches[1] ) ) {
+					$matched_countries[] = $this->matches[1];
+				}
+				$return = $search;
 			}
 		}
+		$this->matched_countries = $matched_countries;
 		return $return;
 	}
 
@@ -170,7 +176,7 @@ class Geo_Nav_Filters {
 	 * @return void
 	 */
 	private function exclude_menu_item( $key ) {
-		if ( ! empty( $this->matches ) && isset( $this->matches[1] ) && $this->matches[1] === $this->user_country_code ) {
+		if ( ! empty( $this->matched_countries ) && in_array( $this->user_country_code, $this->matched_countries ) ) {
 			unset( $this->menu[ $key ] );
 		}
 	}
@@ -183,7 +189,7 @@ class Geo_Nav_Filters {
 	 * @return void
 	 */
 	private function check_for_selection( $key , $item ) {
-		if ( ! empty( $this->matches ) && $this->matches[1] === $this->user_country_code ) {
+		if ( ! empty( $this->matched_countries ) && in_array( $this->user_country_code, $this->matched_countries ) ) {
 			$this->selected['key'] = $key;
 			$this->selected['obj'] = $item;
 			$this->exclude_menu_item( $key );
