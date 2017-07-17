@@ -21,6 +21,16 @@
 		"oAP": "\/.travis.yml",
 		"oF": 0
 		},
+	"\/assets\/css\/geo-content.css": {
+		"aP": 1,
+		"bl": 0,
+		"ft": 16,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "\/assets\/css\/geo-content-min.css",
+		"oF": 0,
+		"oS": 0
+		},
 	"\/assets\/css\/scss\/geo-content.scss": {
 		"aP": 0,
 		"bl": 0,
@@ -68,6 +78,12 @@
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/includes\/classes\/class-geo-content.php",
+		"oF": 0
+		},
+	"\/includes\/classes\/class-geo-nav-filters.php": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/includes\/classes\/class-geo-nav-filters.php",
 		"oF": 0
 		},
 	"\/includes\/classes\/class-geo-settings.php": {

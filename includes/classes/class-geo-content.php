@@ -8,6 +8,7 @@ use lsx\Country_Codes;
 use lsx\WPML_Integration;
 use lsx\Geo_Settings;
 use lsx\CF_Geo_Filters;
+use lsx\Geo_Nav_Filters;
 
 /**
  * Geo_Content Main Class
@@ -50,6 +51,9 @@ class Geo_Content {
 
 		//Caldera Forms Integration
 		\lsx\CF_Geo_Filters::init();
+
+		//WP Nav Menu Filters
+		\lsx\Geo_Nav_Filters::init();
 
 		add_action( 'wp_before_admin_bar_render', array( $this, 'admin_bar_info_box' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'assets' ) );

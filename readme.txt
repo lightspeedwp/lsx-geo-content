@@ -18,3 +18,10 @@ If you add the following "custom class" to a field, LSX Geo Content will compare
 * .lsx-geo-city
 * .lsx-geo-latitude
 * .lsx-geo-longitude
+
+
+=== Nav Menu Filters ===
+Firstly create a menu and assign it to a menu location.  You will add a custom link to the menu and several child menu items, so it creates a drop down on the frontend.
+* .lsx-geo
+* .lsx-geo-{country_code}  e.g "lsx-geo-za"
+* .lsx-geo-ex-{country_code} e.g "lsx-geo-ex-us"
