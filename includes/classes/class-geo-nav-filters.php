@@ -226,8 +226,7 @@ class Geo_Nav_Filters {
 	 * @return void
 	 */
 	private function set_new_parent() {
-
-		if ( ! empty( $this->parent ) ){
+		if ( ! empty( $this->parent ) ) {
 			$new_parent = false;
 			if ( ! empty( $this->selected )  ) {
 				$new_parent = $this->selected;
