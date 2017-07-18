@@ -1,7 +1,7 @@
 ## LSX Geo Content
 
 ### Description
-* Detect your IP address and the Protocol Version (v4 or v6) used.
+* Detect your IP address and the Protocol Version (v4 or v6) used. 
 * Your location is the determined using the https://freegeoip.net/ site. This is cached for 1 hour.
 
 
@@ -22,14 +22,14 @@ Replace country code with the 2 digit country code.
 *  South Africa = ZA
 
 ```
-<?php
+<?php 
     if ( lsx_geo_is_country( $country_code ) ) {
         // Do code
     }
 ?>
 ```
 
-### Caldera Forms
+### Caldera Forms 
 Add in one of the following custom CSS classes to the field you wish to pre-populate. The filters only work with the "text" and "dropdown" type classes.
 * .lsx-geo-ip
 * .lsx-geo-country
