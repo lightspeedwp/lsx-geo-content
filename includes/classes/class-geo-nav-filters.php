@@ -115,13 +115,13 @@ class Geo_Nav_Filters {
 			if ( in_array( 'lsx-geo', $menu_item->classes ) ) {
 				$this->matches = array();
 
-				if ( $this->check_items( $menu_item->classes, "/lsx-geo-parent/" ) ) {
+				if ( $this->check_items( $menu_item->classes, '/lsx-geo-parent/' ) ) {
 					$this->set_current_parent( $menu_key, $menu_item );
-				} else if ( $this->check_items( $menu_item->classes, "/lsx-geo-default/" ) ) {
+				} else if ( $this->check_items( $menu_item->classes, '/lsx-geo-default/' ) ) {
 					$this->set_default_item( $menu_key, $menu_item );
-				} else if ( $this->check_items( $menu_item->classes, "/lsx-geo-ex-(.*)/" ) ) {
+				} else if ( $this->check_items( $menu_item->classes, '/lsx-geo-ex-(.*)/' ) ) {
 					$this->exclude_menu_item( $menu_key );
-				} else if ( $this->check_items( $menu_item->classes, "/lsx-geo-(.*)/" ) ) {
+				} else if ( $this->check_items( $menu_item->classes, '/lsx-geo-(.*)/' ) ) {
 					$this->check_for_selection( $menu_key, $menu_item );
 				}
 			}
@@ -135,7 +135,7 @@ class Geo_Nav_Filters {
 	 * @param string $pattern
 	 * @return boolean
 	 */
-	public function check_items( $classes , $pattern ) {
+	public function check_items( $classes, $pattern ) {
 		$return = false;
 		$matched_countries = array();
 		foreach ( $classes as $class ) {
@@ -159,9 +159,9 @@ class Geo_Nav_Filters {
 	 * @param string $pattern
 	 * @return boolean
 	 */
-	private function search_string( $string , $pattern ) {
+	private function search_string( $string, $pattern ) {
 		$return = false;
-		preg_match($pattern, $string, $matches);
+		preg_match( $pattern, $string, $matches );
 		if ( ! empty( $matches ) ) {
 			$this->matches = $matches;
 			$return = true;
@@ -188,7 +188,7 @@ class Geo_Nav_Filters {
 	 * @param array $item
 	 * @return void
 	 */
-	private function check_for_selection( $key , $item ) {
+	private function check_for_selection( $key, $item ) {
 		if ( ! empty( $this->matched_countries ) && in_array( $this->user_country_code, $this->matched_countries ) ) {
 			$this->selected['key'] = $key;
 			$this->selected['obj'] = $item;
@@ -203,7 +203,7 @@ class Geo_Nav_Filters {
 	 * @param array $item
 	 * @return void
 	 */
-	private function set_current_parent( $key , $item ) {
+	private function set_current_parent( $key, $item ) {
 		$this->parent['key'] = $key;
 		$this->parent['obj'] = $item;
 	}
@@ -215,7 +215,7 @@ class Geo_Nav_Filters {
 	 * @param array $item
 	 * @return void
 	 */
-	private function set_default_item( $key , $item ) {
+	private function set_default_item( $key, $item ) {
 		$this->default['key'] = $key;
 		$this->default['obj'] = $item;
 	}
@@ -227,13 +227,13 @@ class Geo_Nav_Filters {
 	 */
 	private function set_new_parent() {
 
-		if ( !empty( $this->parent ) ){
+		if ( ! empty( $this->parent ) ){
 			$new_parent = false;
 			if ( ! empty( $this->selected )  ) {
 				$new_parent = $this->selected;
 			} else if ( ! empty( $this->default ) ) {
 				$new_parent = $this->default;
-				unset($this->menu[ $new_parent['key'] ] );
+				unset( $this->menu[ $new_parent['key'] ] );
 			}
 
 			if ( false !== $new_parent ) {
