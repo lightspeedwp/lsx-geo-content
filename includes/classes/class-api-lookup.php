@@ -66,9 +66,7 @@ class API_Lookup {
 		$ip_address = $ip_obj->get_ip();
 		$response = false;
 
-		if ( ! defined( 'WP_DEBUG' ) || false === WP_DEBUG ) {
-			$response = get_transient( 'lsx_geo_ip_' . $ip_address );
-		}
+		$response = get_transient( 'lsx_geo_ip_' . $ip_address );
 
 		if ( false === $response ) {
 			//This will eventually become a setting.
