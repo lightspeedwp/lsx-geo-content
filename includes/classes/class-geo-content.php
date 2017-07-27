@@ -144,13 +144,22 @@ class Geo_Content {
 	 * @return string
 	 */
 	public function generate_info_box() {
-		$info_box_fields = array( 'ip', 'country_name', 'region_name', 'city' );
+		$info_box_fields = array( 'ip', 'country_name' );
 		$output = '<div class="lsx-geo-info"><ul>';
 		foreach ( $info_box_fields as $field ) {
 			$output .= '<li class="' . $field . '">' . $this->api_lookup->get_field( $field ) . '</li>';
 		}
-		$output .= '<li class="coordinates">' . $this->api_lookup->get_field( 'latitude' ) . ', ' . $this->api_lookup->get_field( 'longitude' ) . '</li>';
-		$output .= '</ul></div>';
+		$lat = $this->api_lookup->get_field( 'latitude' );
+		if ( false !== $lat && '' !== $lat) {
+			$output .= '<li class="coordinates">' . $lat . ', ' . $this->api_lookup->get_field('longitude') . '</li>';
+		}
+		$output .= '</ul>';
+
+		if ( defined( 'WP_DEBUG' ) && true === WP_DEBUG ) {
+			$logger = \lsx\LSX_Logger::init();
+			$output .= $logger->output_log( 'lsx-geo-content' );
+		}
+		$output .= '</div>';
 		return $output;
 	}
 }

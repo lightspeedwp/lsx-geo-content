@@ -2,6 +2,7 @@
 
 namespace lsx;
 use lsx\Get_IP;
+use lsx\LSX_Logger;
 
 /**
  * API_Lookup Main Class
@@ -28,7 +29,7 @@ class API_Lookup {
 	 * Holds the array of Geo IP sites and the urls
 	 */
 	private $apis = array(
-		'freegeoip'  => '://freegeoip.net/json/',
+		'freegeoip'  => 'https://freegeoip.net/json/',
 	);
 
 	/**
@@ -57,9 +58,23 @@ class API_Lookup {
 	private $ip_obj = false;
 
 	/**
+	 * If the debug is active
+	 */
+	private $log_enabled = false;
+
+	/**
+	 * Holds the IP object
+	 */
+	private $logger = false;
+
+	/**
 	 * Constructor.
 	 */
 	public function __construct() {
+		if ( defined( 'WP_DEBUG' ) && true === WP_DEBUG ) {
+			$this->log_enabled = true;
+			$this->logger = \lsx\LSX_Logger::init();
+		}
 		$this->lookup();
 	}
 
@@ -95,22 +110,19 @@ class API_Lookup {
 
 				if ( false !== $db_country_code ) {
 					$this->parse_file_response( $db_country_code );
+					$this->maybe_log( 'api-lookup', esc_html__( "Location grabbed from GeoIP.dat", 'lsx-geo-content' ) );
 				} else {
 
 					//This will eventually become a setting.
 					$service = 'freegeoip';
 					if (isset($this->apis[$service])) {
-
-						$protocol = 'http';
-						if (is_ssl()) {
-							$protocol .= 's';
-						}
-						$response = file_get_contents($protocol . $this->apis[$service] . $ip_address);
+						$response = wp_safe_remote_get( $this->apis[$service] . $ip_address, array( 'timeout' => 2 ) );
 						$this->parse_response($response);
 					}
 				}
 			} else {
 				$this->location_data = $response;
+				$this->maybe_log( 'api-lookup', esc_html__( "Location grabbed from transient", 'lsx-geo-content' ) );
 			}
 		} else {
 			$this->location_data = array();
@@ -146,6 +158,7 @@ class API_Lookup {
 			if ( isset( $response_decoded['ip'] ) ) {
 				$this->location_data = $response_decoded;
 				set_transient( 'lsx_geo_ip_' . $response_decoded['ip'] , $response_decoded , 60 * 60 );
+				$this->maybe_log( 'api-lookup', esc_html__( "Location grabbed from API", 'lsx-geo-content' ) . '<pre>' . print_r( $response_decoded, true ) . '</pre>' );
 			}
 		}
 	}
@@ -195,5 +208,18 @@ class API_Lookup {
 	 */
 	public function get_fields() {
 		return $this->fields;
+	}
+
+	/**
+	 * Logs a message with the LSX Logger if WP_Debug is enabled.
+	 *
+	 * @param $key string
+	 * @param $message string
+	 * @return void
+	 */
+	public function maybe_log( $key, $message ) {
+		if ( $this->log_enabled ) {
+			$this->logger->log( 'lsx-geo-content', $key, $message );
+		}
 	}
 }
