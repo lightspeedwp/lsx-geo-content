@@ -75,19 +75,30 @@ if ( ! class_exists( '\lsx\LSX_Logger' ) ) {
 					if ( false !== $plugin && $plugin_key !== $plugin ) {
 						continue;
 					}
-
 					$return = '<div>';
-					foreach ( $this->logs as $log_key => $messages ) {
-						if ( false === $plugin ) {
-							$return .= '<h4>' . $log_key . '</h4>';
-						}
-						$return .= '<ul>';
-						$return .= '<li>' . implode( '</li><li>', $messages ) . '</li>';
-						$return .= '</ul>';
-					}
-
+					$this->loop_through_logs( $plugin , $log );
 					$return .= '</div>';
 				}
+			}
+			return $return;
+		}
+
+		/**
+		 * Gets a field from the API lookup object
+		 *
+		 * @param $plugin string | boolean
+		 * @param $log_array array
+		 * @return  string
+		 */
+		public function loop_through_logs( $plugin = false, $log_array = array() ) {
+			$return = '';
+			foreach ( $log_array as $log_key => $messages ) {
+				if ( false === $plugin ) {
+					$return .= '<h4>' . $log_key . '</h4>';
+				}
+				$return .= '<ul>';
+				$return .= '<li>' . implode( '</li><li>', $messages ) . '</li>';
+				$return .= '</ul>';
 			}
 			return $return;
 		}

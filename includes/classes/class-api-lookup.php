@@ -116,8 +116,10 @@ class API_Lookup {
 					//This will eventually become a setting.
 					$service = 'freegeoip';
 					if ( isset( $this->apis[ $service ] ) ) {
-						$response = wp_safe_remote_get( $this->apis[ $service ] . $ip_address, array(
-							'timeout' => 2, ) );
+						$args = array(
+							'timeout' => 2,
+						);
+						$response = wp_safe_remote_get( $this->apis[ $service ] . $ip_address, $args );
 						$this->parse_response( $response );
 					}
 				}
