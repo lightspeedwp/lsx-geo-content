@@ -110,21 +110,20 @@ class API_Lookup {
 
 				if ( false !== $db_country_code ) {
 					$this->parse_file_response( $db_country_code );
-					$this->maybe_log( 'api-lookup', esc_html__( "Location grabbed from GeoIP.dat", 'lsx-geo-content' ) );
+					$this->maybe_log( 'api-lookup', esc_html__( 'Location grabbed from GeoIP.dat', 'lsx-geo-content' ) );
 				} else {
 
 					//This will eventually become a setting.
 					$service = 'freegeoip';
 					if ( isset( $this->apis[ $service ] ) ) {
-						$response = wp_safe_remote_get( $this->apis[$service] . $ip_address, array(
-							'timeout' => 2,
-							) );
-						$this->parse_response($response);
+						$response = wp_safe_remote_get( $this->apis[ $service ] . $ip_address, array(
+							'timeout' => 2, ) );
+						$this->parse_response( $response );
 					}
 				}
 			} else {
 				$this->location_data = $response;
-				$this->maybe_log( 'api-lookup', esc_html__( "Location grabbed from transient", 'lsx-geo-content' ) );
+				$this->maybe_log( 'api-lookup', esc_html__( 'Location grabbed from transient', 'lsx-geo-content' ) );
 			}
 		} else {
 			$this->location_data = array();
@@ -160,7 +159,7 @@ class API_Lookup {
 			if ( isset( $response_decoded['ip'] ) ) {
 				$this->location_data = $response_decoded;
 				set_transient( 'lsx_geo_ip_' . $response_decoded['ip'] , $response_decoded , 60 * 60 );
-				$this->maybe_log( 'api-lookup', esc_html__( "Location grabbed from API", 'lsx-geo-content' ) . '<pre>' . print_r( $response_decoded, true ) . '</pre>' );
+				$this->maybe_log( 'api-lookup', esc_html__( 'Location grabbed from API', 'lsx-geo-content' ) . '<pre>' . print_r( $response_decoded, true ) . '</pre>' );
 			}
 		}
 	}
