@@ -44,7 +44,7 @@ class API_Lookup {
 	/**
 	 * Holds location to the geoip v6 .dat file
 	 */
-	private $data6 = LSX_GEO_PATH.'assets/data/GeoIP.dat.gz';
+	private $data6 = LSX_GEO_PATH.'assets/data/GeoIPv6.dat';
 
 	/**
 	 * Holds open file object
@@ -95,8 +95,6 @@ class API_Lookup {
 
 				if ( false !== $db_country_code ) {
 					$this->parse_file_response( $db_country_code );
-					print_r($this->location_data);
-					die();
 				} else {
 
 					//This will eventually become a setting.
