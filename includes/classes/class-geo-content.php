@@ -38,6 +38,11 @@ class Geo_Content {
 	 * Constructor.
 	 */
 	public function __construct() {
+
+		if ( ! class_exists( 'GeoIP' ) ) {
+			require_once LSX_GEO_PATH . 'vendor/autoload.php';
+		}
+
 		//Load the User Details
 		$this->api_lookup = \lsx\API_Lookup::init();
 
