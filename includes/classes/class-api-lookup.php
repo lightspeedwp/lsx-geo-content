@@ -40,12 +40,12 @@ class API_Lookup {
 	/**
 	 * Holds location to the geoip v4 .dat file
 	 */
-	private $data4 = LSX_GEO_PATH.'assets/data/GeoIP.dat';
+	private $data4 = LSX_GEO_PATH . 'assets/data/GeoIP.dat';
 
 	/**
 	 * Holds location to the geoip v6 .dat file
 	 */
-	private $data6 = LSX_GEO_PATH.'assets/data/GeoIPv6.dat';
+	private $data6 = LSX_GEO_PATH . 'assets/data/GeoIPv6.dat';
 
 	/**
 	 * Holds open file object
@@ -104,7 +104,7 @@ class API_Lookup {
 		if ( ! is_admin() ) {
 			//$response = get_transient('lsx_geo_ip_' . $ip_address);
 
-			if (false === $response) {
+			if ( false === $response ) {
 
 				$db_country_code = $this->check_db_file();
 
@@ -115,8 +115,10 @@ class API_Lookup {
 
 					//This will eventually become a setting.
 					$service = 'freegeoip';
-					if (isset($this->apis[$service])) {
-						$response = wp_safe_remote_get( $this->apis[$service] . $ip_address, array( 'timeout' => 2 ) );
+					if ( isset( $this->apis[ $service ] ) ) {
+						$response = wp_safe_remote_get( $this->apis[$service] . $ip_address, array(
+							'timeout' => 2,
+							) );
 						$this->parse_response($response);
 					}
 				}
@@ -137,10 +139,10 @@ class API_Lookup {
 	public function check_db_file() {
 		$country_code = false;
 		if ( '4' === $this->ip_obj->get_protocol_version() ) {
-			$this->file_obj = geoip_open($this->data4,GEOIP_STANDARD);
+			$this->file_obj = geoip_open( $this->data4,GEOIP_STANDARD );
 			$country_code = geoip_country_code_by_addr( $this->file_obj, $this->ip_obj->get_ip() );
 		} else {
-			$this->file_obj = geoip_open($this->data6,GEOIP_STANDARD);
+			$this->file_obj = geoip_open( $this->data6,GEOIP_STANDARD );
 			$country_code = geoip_country_code_by_addr_v6( $this->file_obj, $this->ip_obj->get_ip() );
 		}
 		return $country_code;
