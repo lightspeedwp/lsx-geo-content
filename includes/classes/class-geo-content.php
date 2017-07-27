@@ -150,8 +150,8 @@ class Geo_Content {
 			$output .= '<li class="' . $field . '">' . $this->api_lookup->get_field( $field ) . '</li>';
 		}
 		$lat = $this->api_lookup->get_field( 'latitude' );
-		if ( false !== $lat && '' !== $lat) {
-			$output .= '<li class="coordinates">' . $lat . ', ' . $this->api_lookup->get_field('longitude') . '</li>';
+		if ( false !== $lat && '' !== $lat ) {
+			$output .= '<li class="coordinates">' . $lat . ', ' . $this->api_lookup->get_field( 'longitude' ) . '</li>';
 		}
 		$output .= '</ul>';
 
