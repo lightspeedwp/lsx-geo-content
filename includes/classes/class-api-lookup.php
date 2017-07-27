@@ -66,22 +66,26 @@ class API_Lookup {
 		$ip_address = $ip_obj->get_ip();
 		$response = false;
 
-		$response = get_transient( 'lsx_geo_ip_' . $ip_address );
+		if ( ! is_admin() ) {
+			$response = get_transient('lsx_geo_ip_' . $ip_address);
 
-		if ( false === $response ) {
-			//This will eventually become a setting.
-			$service = 'freegeoip';
-			if ( isset( $this->apis[ $service ] ) ) {
+			if (false === $response) {
+				//This will eventually become a setting.
+				$service = 'freegeoip';
+				if (isset($this->apis[$service])) {
 
-				$protocol = 'http';
-				if ( is_ssl() ) {
-					$protocol .= 's';
+					$protocol = 'http';
+					if (is_ssl()) {
+						$protocol .= 's';
+					}
+					$response = file_get_contents($protocol . $this->apis[$service] . $ip_address);
+					$this->parse_response($response);
 				}
-				$response = file_get_contents( $protocol . $this->apis[ $service ] . $ip_address );
-				$this->parse_response( $response );
+			} else {
+				$this->location_data = $response;
 			}
 		} else {
-			$this->location_data = $response;
+			$this->location_data = array();
 		}
 	}
 
