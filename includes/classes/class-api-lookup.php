@@ -106,7 +106,7 @@ class API_Lookup {
 		$response = false;
 
 		if ( ! is_admin() ) {
-			//$response = get_transient('lsx_geo_ip_' . $ip_address);
+			$response = get_transient('lsx_geo_ip_' . $this->ip_obj->get_ip());
 
 			if ( false === $response ) {
 
@@ -115,7 +115,7 @@ class API_Lookup {
 				if ( false !== $db_country_code ) {
 					$this->parse_file_response( $db_country_code );
 				} else {
-					$this->contact_api();
+					//$this->contact_api();
 				}
 			} else {
 				$this->location_data = $response;
