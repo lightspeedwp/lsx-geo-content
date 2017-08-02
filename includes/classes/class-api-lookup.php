@@ -63,9 +63,14 @@ class API_Lookup {
 	private $log_enabled = false;
 
 	/**
-	 * Holds the IP object
+	 * Holds the logger object
 	 */
 	private $logger = false;
+
+	/**
+	 * If 1 API request has happened
+	 */
+	private $have_requested_before = false;
 
 	/**
 	 * Constructor.
@@ -98,7 +103,6 @@ class API_Lookup {
 	 */
 	public function lookup() {
 		$this->ip_obj = \lsx\Get_IP::init();
-		$ip_address = $this->ip_obj->get_ip();
 		$response = false;
 
 		if ( ! is_admin() ) {
@@ -109,19 +113,11 @@ class API_Lookup {
 				$db_country_code = $this->check_db_file();
 
 				if ( false !== $db_country_code ) {
-					$this->parse_file_response( $db_country_code );
 					$this->maybe_log( 'api-lookup', esc_html__( 'Location grabbed from GeoIP.dat', 'lsx-geo-content' ) );
+					$this->parse_file_response( $db_country_code );
 				} else {
-
-					//This will eventually become a setting.
-					$service = 'freegeoip';
-					if ( isset( $this->apis[ $service ] ) ) {
-						$args = array(
-							'timeout' => 2,
-						);
-						$response = wp_safe_remote_get( $this->apis[ $service ] . $ip_address, $args );
-						$this->parse_response( $response );
-					}
+					$this->maybe_log( 'api-lookup', esc_html__( 'Location grabbed from API', 'lsx-geo-content' ) );
+					$this->contact_api();
 				}
 			} else {
 				$this->location_data = $response;
@@ -130,6 +126,24 @@ class API_Lookup {
 		} else {
 			$this->location_data = array();
 		}
+	}
+
+	/**
+	 * contacts the API
+	 *
+	 * @return void
+	 */
+	public function contact_api() {
+		//This will eventually become a setting.
+		$service = 'freegeoip';
+		if ( false === $this->have_requested_before && isset( $this->apis[ $service ] ) ) {
+			$args = array(
+				'timeout' => 2,
+			);
+			$response = wp_safe_remote_get( $this->apis[ $service ] . $this->ip_obj->get_ip(), $args );
+			$this->parse_response( $response );
+		}
+
 	}
 
 	/**
@@ -161,6 +175,7 @@ class API_Lookup {
 			if ( isset( $response_decoded['ip'] ) ) {
 				$this->location_data = $response_decoded;
 				set_transient( 'lsx_geo_ip_' . $response_decoded['ip'] , $response_decoded , 60 * 60 );
+				$this->have_requested_before = true;
 				$this->maybe_log( 'api-lookup', esc_html__( 'Location grabbed from API', 'lsx-geo-content' ) . '<pre>' . print_r( $response_decoded, true ) . '</pre>' );
 			}
 		}
