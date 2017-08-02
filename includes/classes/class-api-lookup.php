@@ -3,6 +3,7 @@
 namespace lsx;
 use lsx\Get_IP;
 use lsx\LSX_Logger;
+use lsx\Country_Codes;
 
 /**
  * API_Lookup Main Class
@@ -106,23 +107,43 @@ class API_Lookup {
 		$response = false;
 
 		if ( ! is_admin() ) {
-			$response = get_transient('lsx_geo_ip_' . $this->ip_obj->get_ip());
+			//$response = get_transient('lsx_geo_ip_' . $this->ip_obj->get_ip());
 
 			if ( false === $response ) {
 
-				$db_country_code = $this->check_db_file();
+				if ( $this->check_cloudfare() ) {
+					return;
+				}
+
+				/*$db_country_code = $this->check_db_file();
 
 				if ( false !== $db_country_code ) {
 					$this->parse_file_response( $db_country_code );
 				} else {
-					//$this->contact_api();
-				}
+					$this->contact_api();
+				}*/
 			} else {
 				$this->location_data = $response;
 				$this->maybe_log( 'transient', esc_html__( 'Location grabbed from ', 'lsx-geo-content' ) );
 			}
+			$this->maybe_log( 'location result', '<pre>' . print_r( $this->location_data, true ) . '</pre>' );
 		} else {
 			$this->location_data = array();
+		}
+	}
+
+	/**
+	 * contacts the API
+	 *
+	 * @return boolean
+	 */
+	public function check_cloudfare() {
+		//This will eventually become a setting.
+		if ( ! empty( $_GET['HTTP_CF_IPCOUNTRY'] ) ) {
+			$country_code = sanitize_text_field( strtoupper( $_GET['HTTP_CF_IPCOUNTRY'] ) );
+			$this->parse_file_response( $country_code, 'cloudfare' );
+		} else {
+			return false;
 		}
 	}
 
@@ -155,10 +176,12 @@ class API_Lookup {
 			$this->file_obj = geoip_open( $this->data4,GEOIP_STANDARD );
 			$country_code = geoip_country_code_by_addr( $this->file_obj, $this->ip_obj->get_ip() );
 			$this->maybe_log( 'file-check', esc_html__( 'Checking IP v4', 'lsx-geo-content' ) );
+			geoip_close( $this->file_obj );
 		} else {
 			$this->file_obj = geoip_open( $this->data6,GEOIP_STANDARD );
 			$country_code = geoip_country_code_by_addr_v6( $this->file_obj, $this->ip_obj->get_ip() );
 			$this->maybe_log( 'file-check', esc_html__( 'Checking IP v6', 'lsx-geo-content' ) );
+			geoip_close( $this->file_obj);
 		}
 		return $country_code;
 	}
@@ -187,32 +210,21 @@ class API_Lookup {
 	 * Validate the response from the Data File
 	 *
 	 * @param $country_code string
+	 * @param $log_key string
 	 * @return void
 	 */
-	public function parse_file_response( $country_code ) {
-		if ( false !== $this->file_obj && false !== $this->ip_obj ) {
+	public function parse_file_response( $country_code, $log_key = 'file-search' ) {
+		if ( false !== $this->ip_obj ) {
 			$data = array(
 				'ip' => $this->ip_obj->get_ip(),
 				'country_code' => $country_code,
+				'country_name' => \lsx\Country_Codes::get_country_name( $country_code ),
 			);
-
-			if ( '4' === $this->ip_obj->get_protocol_version() ) {
-				$data['country_name'] = geoip_country_name_by_addr( $this->file_obj, $this->ip_obj->get_ip() );
-			} else {
-				$data['country_name'] = geoip_country_name_by_addr_v6( $this->file_obj, $this->ip_obj->get_ip() );
-			}
-
 			$this->location_data = $data;
 			set_transient( 'lsx_geo_ip_' . $this->ip_obj->get_ip() , $data , 60 * 60 );
-			$this->maybe_log( 'file-search', esc_html__( 'Location from GeoIP.dat', 'lsx-geo-content' ) . '<pre>' . print_r( $this->location_data, true ) . '</pre>' );
-
-			if ( '4' === $this->ip_obj->get_protocol_version() ) {
-				geoip_close( $this->data4 );
-			} else {
-				geoip_close( $this->data6 );
-			}
+			$this->maybe_log( $log_key, esc_html__( 'Location from ', 'lsx-geo-content' ));
 		} else {
-			$this->maybe_log( 'file-search', esc_html__( 'File search failed', 'lsx-geo-content' ) );
+			$this->maybe_log( $log_key, esc_html__( 'Search failed ', 'lsx-geo-content' ) );
 		}
 	}
 

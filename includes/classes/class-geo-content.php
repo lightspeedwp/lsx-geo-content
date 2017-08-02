@@ -154,11 +154,6 @@ class Geo_Content {
 			$output .= '<li class="coordinates">' . $lat . ', ' . $this->api_lookup->get_field( 'longitude' ) . '</li>';
 		}
 		$output .= '</ul>';
-
-		if ( defined( 'WP_DEBUG' ) && true === WP_DEBUG ) {
-			$logger = \lsx\LSX_Logger::init();
-			$output .= $logger->output_log( 'lsx-geo-content' );
-		}
 		$output .= '</div>';
 		return $output;
 	}

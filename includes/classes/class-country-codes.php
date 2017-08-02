@@ -19,11 +19,6 @@ class Country_Codes {
 	private static $instance;
 
 	/**
-	 * Holds current users location data
-	 */
-	private $data;
-
-	/**
 	 * Holds the array of Geo IP sites and the urls
 	 */
 	private $apis = array(
@@ -55,7 +50,7 @@ class Country_Codes {
 	 *
 	 * @return void
 	 */
-	public function lookup() {
+	private function lookup() {
 
 		$response = get_option( 'lsx_geo_ip_country_data' , false );
 
@@ -68,8 +63,6 @@ class Country_Codes {
 				) );
 				$this->parse_response( $response );
 			}
-		} else {
-			$this->data = $response;
 		}
 	}
 
@@ -79,14 +72,30 @@ class Country_Codes {
 	 * @param $response string
 	 * @return void
 	 */
-	public function parse_response( $response ) {
+	private function parse_response( $response ) {
 		if ( ! is_wp_error( $response ) && $response['body'] ) {
 			$response_decoded = json_decode( $response['body'] , true );
 			if ( false !== $response_decoded && '' !== $response_decoded ) {
 				asort( $response_decoded );
-				$this->data = $response_decoded;
 				add_option( 'lsx_geo_ip_country_data' , $response_decoded );
 			}
 		}
+	}
+
+	/**
+	 * Gets the Country Name using the country code.
+	 *
+	 * @param $country_code string
+	 * @return boolean | string
+	 */
+	public static function get_country_name( $country_code = '' ) {
+		$return = false;
+		$country_name = get_option( 'lsx_geo_ip_country_data' , false );
+		if ( '' !== $country_code && false !== $country_name ) {
+			if ( isset( $country_name[ $country_code ] ) ) {
+				$return = $country_name[ $country_code ];
+			}
+		}
+		return $return;
 	}
 }
