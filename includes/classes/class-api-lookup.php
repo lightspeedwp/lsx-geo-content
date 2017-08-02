@@ -139,8 +139,8 @@ class API_Lookup {
 	 */
 	public function check_cloudfare() {
 		//This will eventually become a setting.
-		if ( ! empty( $_GET['HTTP_CF_IPCOUNTRY'] ) ) {
-			$country_code = sanitize_text_field( strtoupper( $_GET['HTTP_CF_IPCOUNTRY'] ) );
+		if ( ! empty( $_SERVER['HTTP_CF_IPCOUNTRY'] ) ) {
+			$country_code = sanitize_text_field( strtoupper( $_SERVER['HTTP_CF_IPCOUNTRY'] ) );
 			$this->parse_file_response( $country_code, 'cloudfare' );
 		} else {
 			return false;
