@@ -119,7 +119,7 @@ class API_Lookup {
 				}
 			} else {
 				$this->location_data = $response;
-				$this->maybe_log( 'api-lookup', esc_html__( 'Location grabbed from transient', 'lsx-geo-content' ) );
+				$this->maybe_log( 'transient', esc_html__( 'Location grabbed from ', 'lsx-geo-content' ) );
 			}
 		} else {
 			$this->location_data = array();
@@ -176,10 +176,10 @@ class API_Lookup {
 				$this->location_data = $response_decoded;
 				set_transient( 'lsx_geo_ip_' . $response_decoded['ip'] , $response_decoded , 60 * 60 );
 				$this->have_requested_before = true;
-				$this->maybe_log( 'api-lookup', esc_html__( 'Location grabbed from API', 'lsx-geo-content' ) . '<pre>' . print_r( $response_decoded, true ) . '</pre>' );
+				$this->maybe_log( 'api-lookup', esc_html__( 'Location from API Request', 'lsx-geo-content' ) . '<pre>' . print_r( $response_decoded, true ) . '</pre>' );
 			}
 		} else {
-			$this->maybe_log( 'api-lookup', esc_html__( 'An error occurred with the API query', 'lsx-geo-content' ) . '<pre>' . print_r( $response, true ) . '</pre>' );
+			$this->maybe_log( 'api-lookup', esc_html__( 'Error occurred with the API Request', 'lsx-geo-content' ) . '<pre>' . print_r( $response, true ) . '</pre>' );
 		}
 	}
 
@@ -204,7 +204,13 @@ class API_Lookup {
 
 			$this->location_data = $data;
 			set_transient( 'lsx_geo_ip_' . $this->ip_obj->get_ip() , $data , 60 * 60 );
-			$this->maybe_log( 'file-search', esc_html__( 'Location grabbed from GeoIP.dat', 'lsx-geo-content' ) . '<pre>' . print_r( $this->location_data, true ) . '</pre>' );
+			$this->maybe_log( 'file-search', esc_html__( 'Location from GeoIP.dat', 'lsx-geo-content' ) . '<pre>' . print_r( $this->location_data, true ) . '</pre>' );
+
+			if ( '4' === $this->ip_obj->get_protocol_version() ) {
+				geoip_close( $this->data4 );
+			} else {
+				geoip_close( $this->data6 );
+			}
 		} else {
 			$this->maybe_log( 'file-search', esc_html__( 'File search failed', 'lsx-geo-content' ) );
 		}
