@@ -76,7 +76,7 @@ if ( ! class_exists( '\lsx\LSX_Logger' ) ) {
 						continue;
 					}
 					$return = '<div>';
-					$this->loop_through_logs( $plugin , $log );
+					$return .= $this->loop_through_logs( $plugin , $log );
 					$return .= '</div>';
 				}
 			}
@@ -93,6 +93,12 @@ if ( ! class_exists( '\lsx\LSX_Logger' ) ) {
 		public function loop_through_logs( $plugin = false, $log_array = array() ) {
 			$return = '';
 			foreach ( $log_array as $log_key => $messages ) {
+				/*if ( empty( $messages ) ) {
+					continue;
+				}*/
+				if ( ! is_array( $messages ) ) {
+					$messages = array( $messages );
+				}
 				if ( false === $plugin ) {
 					$return .= '<h4>' . $log_key . '</h4>';
 				}
