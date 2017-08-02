@@ -32,7 +32,7 @@ if ( ! class_exists( '\lsx\LSX_Logger' ) ) {
 		 * Constructor.
 		 */
 		public function __construct() {
-
+			add_action( 'wp_before_admin_bar_render', array( $this, 'wp_admin_bar_menu' ) );
 		}
 
 		/**
@@ -72,7 +72,7 @@ if ( ! class_exists( '\lsx\LSX_Logger' ) ) {
 			if ( ! empty( $this->logs ) ) {
 				foreach ( $this->logs as $plugin_key => $log ) {
 
-					$return = '<div>';
+					$return = '<div style="padding: 15px;">';
 					if ( false !== $plugin && $plugin_key !== $plugin ) {
 						continue;
 					} else if ( false === $plugin ) {
@@ -100,5 +100,31 @@ if ( ! class_exists( '\lsx\LSX_Logger' ) ) {
 			}
 			return $return;
 		}
+
+		/**
+		 * Registers an admin bar menu so you can see the output of the log messages
+		 *
+		 * @return  void
+		 */
+		function wp_admin_bar_menu() {
+			global $wp_admin_bar;
+			$wp_admin_bar->add_menu( array(
+				'parent' => false,
+				'id' => 'lsx_logger',
+				'title' => __('LSX Log'), // link title
+				'href' => '',
+			));
+			$wp_admin_bar->add_menu( array(
+				'parent' => 'lsx_logger',
+				'id' => 'lsx_logger_output',
+				'title' => '', // link title
+				'href' => '',
+				'meta' => array(
+					'html' => $this->output_log(),
+					'class' => '',
+				),
+			));
+		}
+
 	}
 }
