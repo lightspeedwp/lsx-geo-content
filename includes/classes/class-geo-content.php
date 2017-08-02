@@ -39,10 +39,6 @@ class Geo_Content {
 	 */
 	public function __construct() {
 
-		if ( ! class_exists( 'GeoIP' ) ) {
-			require_once LSX_GEO_PATH . 'vendor/geoip/geoip.php';
-		}
-
 		//Load the User Details
 		$this->api_lookup = \lsx\API_Lookup::init();
 

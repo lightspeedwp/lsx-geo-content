@@ -23,23 +23,31 @@ define( 'LSX_GEO_CORE', __FILE__ );
 define( 'LSX_GEO_URL', plugin_dir_url( __FILE__ ) );
 define( 'LSX_GEO_VER', '1.0.0' );
 
-// include context helper & autoloader.
-require_once( LSX_GEO_PATH . 'includes/lsx-geo-content.php' );
+if ( ! class_exists( 'GeoIP' ) ) {
+	require_once LSX_GEO_PATH . 'vendor/geoip/geoip.php';
+}
+
+// Include the classes
+$classes = array(
+	'country-codes',
+	'lsx-logger',
+	'api-lookup',
+	'get-ip',
+	'cf-geo-filters',
+	'geo-nav-filters',
+	'geo-settings',
+	'wpml-integration',
+	'geo-content',
+);
+foreach ( $classes as $class ) {
+	require_once( LSX_GEO_PATH . 'includes/classes/class-' . $class . '.php' );
+}
 
 // include the template tags
 require_once( LSX_GEO_PATH . 'includes/template-tags.php' );
 
-// Register tour operator autoloader.
-spl_autoload_register( 'lsx_geo_content_autoload_class', true, false );
-
 // Init Plugin.
 lsx_geo_content();
-
-// Register activation hook.
-register_activation_hook( LSX_GEO_CORE, array(
-	'LSX_Geo_Content',
-	'register_activation_hook',
-) );
 
 
 /* ======================= The API Classes ========================= */

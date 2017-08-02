@@ -115,13 +115,13 @@ class API_Lookup {
 					return;
 				}
 
-				/*$db_country_code = $this->check_db_file();
+				$db_country_code = $this->check_db_file();
 
 				if ( false !== $db_country_code ) {
 					$this->parse_file_response( $db_country_code );
 				} else {
 					$this->contact_api();
-				}*/
+				}
 			} else {
 				$this->location_data = $response;
 				$this->maybe_log( 'transient', esc_html__( 'Location grabbed from ', 'lsx-geo-content' ) );

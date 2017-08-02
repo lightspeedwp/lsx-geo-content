@@ -8,6 +8,17 @@
  */
 
 /**
+ * LSX GEO Content wrapper to load and manipulate the overall instances.
+ *
+ * @since 1.0.7
+ * @return  \lsx\Geo_Content  A single instance
+ */
+function lsx_geo_content() {
+	// Init geo content class and return object.
+	return \lsx\Geo_Content::init();
+}
+
+/**
  * Takes the given country code and checks to see if the user is currently located there
  *
  * @param		$country_code string
