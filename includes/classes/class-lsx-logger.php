@@ -72,11 +72,15 @@ if ( ! class_exists( '\lsx\LSX_Logger' ) ) {
 			if ( ! empty( $this->logs ) ) {
 				foreach ( $this->logs as $plugin_key => $log ) {
 
+					$return = '<div>';
 					if ( false !== $plugin && $plugin_key !== $plugin ) {
 						continue;
+					} else if ( false === $plugin ) {
+						$return .= '<h4>' . $plugin_key . '</h4>';
 					}
-					$return = '<div>';
-					$return .= $this->loop_through_logs( $plugin , $log );
+					$return .= '<ul>';
+					$return .= $this->loop_through_logs( $log );
+					$return .= '</ul>';
 					$return .= '</div>';
 				}
 			}
@@ -86,25 +90,13 @@ if ( ! class_exists( '\lsx\LSX_Logger' ) ) {
 		/**
 		 * Gets a field from the API lookup object
 		 *
-		 * @param $plugin string | boolean
 		 * @param $log_array array
 		 * @return  string
 		 */
-		public function loop_through_logs( $plugin = false, $log_array = array() ) {
+		public function loop_through_logs( $log_array = array() ) {
 			$return = '';
-			foreach ( $log_array as $log_key => $messages ) {
-				/*if ( empty( $messages ) ) {
-					continue;
-				}*/
-				if ( ! is_array( $messages ) ) {
-					$messages = array( $messages );
-				}
-				if ( false === $plugin ) {
-					$return .= '<h4>' . $log_key . '</h4>';
-				}
-				$return .= '<ul>';
-				$return .= '<li>' . implode( '</li><li>', $messages ) . '</li>';
-				$return .= '</ul>';
+			foreach ( $log_array as $key => $message ) {
+				$return .= '<li>' . $message . ' <small>(' . $key .')</small></li>';
 			}
 			return $return;
 		}
