@@ -107,7 +107,7 @@ class API_Lookup {
 		$response = false;
 
 		if ( ! is_admin() ) {
-			//$response = get_transient('lsx_geo_ip_' . $this->ip_obj->get_ip());
+			$response = get_transient('lsx_geo_ip_' . $this->ip_obj->get_ip());
 
 			if ( false === $response ) {
 
