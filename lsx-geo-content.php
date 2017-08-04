@@ -104,7 +104,7 @@ function lsx_geo_content_api_admin_init() {
 	}
 
 	$instance = get_option( 'lsx_api_instance', false );
-	if ( false === $instance ){
+	if ( false === $instance ) {
 		$instance = LSX_API_Manager::generatePassword();
 	}
 
