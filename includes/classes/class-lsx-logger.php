@@ -96,7 +96,7 @@ if ( ! class_exists( '\lsx\LSX_Logger' ) ) {
 		public function loop_through_logs( $log_array = array() ) {
 			$return = '';
 			foreach ( $log_array as $key => $message ) {
-				$return .= '<li>' . $message . ' <small>(' . $key .')</small></li>';
+				$return .= '<li>' . $message . ' <small>(' . $key . ')</small></li>';
 			}
 			return $return;
 		}
@@ -111,7 +111,7 @@ if ( ! class_exists( '\lsx\LSX_Logger' ) ) {
 			$wp_admin_bar->add_menu( array(
 				'parent' => false,
 				'id' => 'lsx_logger',
-				'title' => __('LSX Log'), // link title
+				'title' => __( 'LSX Log' ), // link title
 				'href' => '',
 			));
 			$wp_admin_bar->add_menu( array(

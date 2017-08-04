@@ -31,6 +31,11 @@ class CF_Geo_Filters {
 	private $classes = array( 'lsx-geo-ip', 'lsx-geo-country', 'lsx-geo-region', 'lsx-geo-zip-code', 'lsx-geo-metro-code', 'lsx-geo-city', 'lsx-geo-latitude', 'lsx-geo-longitude' );
 
 	/**
+	 * Holds current key to display
+	 */
+	private $current_key = false;
+
+	/**
 	 * Constructor.
 	 */
 	public function __construct() {
@@ -56,17 +61,14 @@ class CF_Geo_Filters {
 	 * Filter the text fields looking for the country field to filter
 	 *
 	 * @param $field array
-	 * @return string
+	 * @return array
 	 */
 	public function text_field_placeholder( $field ) {
-
-		if ( '' !== $field['config']['custom_class'] && in_array( $field['config']['custom_class'] , $this->classes ) ) {
-			$key = str_replace( 'lsx-geo-', '', $field['config']['custom_class'] );
-			$key = str_replace( '-', '_', $key );
-			if ( 'country' === $key || 'region' === $key ) {
-				$key .= '_name';
+		if ( '' !== $field['config']['custom_class'] && $this->check_classes( $field['config']['custom_class'] ) ) {
+			if ( 'country' === $this->current_key || 'region' === $this->current_key ) {
+				$this->current_key .= '_name';
 			}
-			$default = $this->api_obj->get_field( $key );
+			$default = $this->api_obj->get_field( $this->current_key );
 			$field['config']['default'] = $default;
 		}
 
@@ -77,29 +79,26 @@ class CF_Geo_Filters {
 	 * Filter the dropdown fields looking for the country field to filter
 	 *
 	 * @param $field array
-	 * @return string
+	 * @return array
 	 */
 	public function dropdown_field_placeholder( $field ) {
-
-		if ( '' !== $field['config']['custom_class'] && in_array( $field['config']['custom_class'] , $this->classes ) ) {
+		if ( '' !== $field['config']['custom_class'] && $this->check_classes( $field['config']['custom_class'] ) ) {
 
 			$needles = array();
-			$index_key = str_replace( 'lsx-geo-', '', $field['config']['custom_class'] );
 
-			switch ( $field['config']['custom_class'] ) {
-				case 'lsx-geo-country':
-				case 'lsx-geo-region':
-					$needles[] = $this->api_obj->get_field( $index_key . '_name' );
-					$needles[] = $this->api_obj->get_field( $index_key . '_code' );
+			switch ( $this->current_key ) {
+				case 'country':
+				case 'region':
+					$needles[] = $this->api_obj->get_field( $this->current_key . '_name' );
+					$needles[] = $this->api_obj->get_field( $this->current_key . '_code' );
 					break;
 
-				case 'lsx-geo-city':
-				case 'lsx-geo-latitude':
-				case 'lsx-geo-longitude':
-				case 'lsx-geo-metro-code':
-				case 'lsx-geo-zip-code':
-					$index_key = str_replace( '-', '_', $index_key );
-					$needles[] = $this->api_obj->get_field( $index_key . '_name' );
+				case 'city':
+				case 'latitude':
+				case 'longitude':
+				case 'metro-code':
+				case 'zip-code':
+					$needles[] = $this->api_obj->get_field( $this->current_key . '_name' );
 					break;
 
 				default:
@@ -113,5 +112,23 @@ class CF_Geo_Filters {
 			}
 		}
 		return $field;
+	}
+
+	/**
+	 * Checks the classes from the form field for the lsx-geo-filters
+	 *
+	 * @param $field_classes string
+	 * @return boolean
+	 */
+	public function check_classes( $field_classes ) {
+		$this->current_key = false;
+		foreach ( $this->classes as $class) {
+			if ( stristr( $field_classes, $class ) ) {
+				$this->current_key = str_replace( 'lsx-geo-', '', $class );
+				$this->current_key = str_replace( '-', '_', $this->current_key );
+				return true;
+			}
+		}
+		return false;
 	}
 }

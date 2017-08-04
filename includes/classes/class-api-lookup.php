@@ -107,7 +107,7 @@ class API_Lookup {
 		$response = false;
 
 		if ( ! is_admin() ) {
-			$response = get_transient('lsx_geo_ip_' . $this->ip_obj->get_ip());
+			$response = get_transient( 'lsx_geo_ip_' . $this->ip_obj->get_ip() );
 
 			if ( false === $response ) {
 
@@ -181,7 +181,7 @@ class API_Lookup {
 			$this->file_obj = geoip_open( $this->data6,GEOIP_STANDARD );
 			$country_code = geoip_country_code_by_addr_v6( $this->file_obj, $this->ip_obj->get_ip() );
 			$this->maybe_log( 'file-check', esc_html__( 'Checking IP v6', 'lsx-geo-content' ) );
-			geoip_close( $this->file_obj);
+			geoip_close( $this->file_obj );
 		}
 		return $country_code;
 	}
@@ -222,7 +222,7 @@ class API_Lookup {
 			);
 			$this->location_data = $data;
 			set_transient( 'lsx_geo_ip_' . $this->ip_obj->get_ip() , $data , 60 * 60 );
-			$this->maybe_log( $log_key, esc_html__( 'Location from ', 'lsx-geo-content' ));
+			$this->maybe_log( $log_key, esc_html__( 'Location from ', 'lsx-geo-content' ) );
 		} else {
 			$this->maybe_log( $log_key, esc_html__( 'Search failed ', 'lsx-geo-content' ) );
 		}

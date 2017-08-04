@@ -60,9 +60,9 @@ lsx_geo_content();
  * Runs once when the plugin is activated.
  */
 function lsx_geo_content_activate_plugin() {
-	$lsx_to_password = get_option('lsx_api_instance',false);
-	if(false === $lsx_to_password){
-		update_option('lsx_api_instance',LSX_API_Manager::generatePassword());
+	$lsx_to_password = get_option( 'lsx_api_instance', false );
+	if( false === $lsx_to_password ){
+		update_option( 'lsx_api_instance', LSX_API_Manager::generatePassword() );
 	}
 }
 //register_activation_hook( __FILE__, 'lsx_geo_content_activate_plugin' );
@@ -70,7 +70,7 @@ function lsx_geo_content_activate_plugin() {
 /**
  *	Grabs the email and api key from the LSX Search Settings.
  */
-function lsx_geo_content_options_pages_filter($pages){
+function lsx_geo_content_options_pages_filter( $pages ){
 	$pages[] = 'lsx-settings';
 	$pages[] = 'lsx-to-settings';
 	return $pages;
@@ -80,28 +80,28 @@ function lsx_geo_content_options_pages_filter($pages){
 function lsx_geo_content_api_admin_init(){
 	global $lsx_banners_api_manager;
 
-	if(function_exists( 'tour_operator' )) {
-		$options = get_option('_lsx-to_settings', false);
+	if ( function_exists( 'tour_operator' ) ) {
+		$options = get_option( '_lsx-to_settings', false );
 	}else{
-		$options = get_option('_lsx_settings', false);
-		if (false === $options) {
-			$options = get_option('_lsx_lsx-settings', false);
+		$options = get_option( '_lsx_settings', false );
+		if ( false === $options ) {
+			$options = get_option( '_lsx_lsx-settings', false );
 		}
 	}
 
-	$data = array('api_key'=>'','email'=>'');
+	$data = array( 'api_key'=>'', 'email'=>'' );
 
-	if(false !== $options && isset($options['api'])){
-		if(isset($options['api']['lsx-geo-content_api_key']) && '' !== $options['api']['lsx-geo-content_api_key']){
+	if ( false !== $options && isset( $options['api'] ) ) {
+		if( isset( $options['api']['lsx-geo-content_api_key'] ) && '' !== $options['api']['lsx-geo-content_api_key'] ) {
 			$data['api_key'] = $options['api']['lsx-geo-content_api_key'];
 		}
-		if(isset($options['api']['lsx-geo-content_email']) && '' !== $options['api']['lsx-geo-content_email']){
+		if( isset( $options['api']['lsx-geo-content_email'] ) && '' !== $options['api']['lsx-geo-content_email'] ) {
 			$data['email'] = $options['api']['lsx-geo-content_email'];
 		}
 	}
 
 	$instance = get_option( 'lsx_api_instance', false );
-	if(false === $instance){
+	if( false === $instance ){
 		$instance = LSX_API_Manager::generatePassword();
 	}
 
@@ -113,6 +113,6 @@ function lsx_geo_content_api_admin_init(){
 		'api_key'		=>		$data['api_key'],
 		'file'			=>		'lsx-geo-content.php'
 	);
-	$lsx_geo_content_api_manager = new LSX_API_Manager($api_array);
+	$lsx_geo_content_api_manager = new LSX_API_Manager( $api_array );
 }
 //add_action('admin_init','lsx_geo_content_api_admin_init');
