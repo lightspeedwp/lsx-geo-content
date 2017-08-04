@@ -236,7 +236,8 @@ class Geo_Nav_Filters {
 			}
 
 			if ( false !== $new_parent ) {
-				$this->menu[ $this->parent['key'] ]->title = $this->menu[ $this->parent['key'] ]->title . ' ' . $new_parent['obj']->title;
+				//$this->menu[ $this->parent['key'] ]->title = $this->menu[ $this->parent['key'] ]->title . ' ' . $new_parent['obj']->title;
+				$this->menu[ $this->parent['key'] ]->title = $new_parent['obj']->title;
 				$this->menu[ $this->parent['key'] ]->url = $new_parent['obj']->url;
 			}
 		}

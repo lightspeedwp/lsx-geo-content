@@ -122,7 +122,7 @@ class CF_Geo_Filters {
 	 */
 	public function check_classes( $field_classes ) {
 		$this->current_key = false;
-		foreach ( $this->classes as $class) {
+		foreach ( $this->classes as $class ) {
 			if ( stristr( $field_classes, $class ) ) {
 				$this->current_key = str_replace( 'lsx-geo-', '', $class );
 				$this->current_key = str_replace( '-', '_', $this->current_key );
