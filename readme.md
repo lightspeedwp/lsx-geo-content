@@ -2,7 +2,7 @@
 
 ### Description
 * Detect your IP address and the Protocol Version (v4 or v6) used. 
-* Your location is the determined using the https://freegeoip.net/ site. This is cached for 1 hour.
+* Your country code  is then determined using the downloaded DB from https://dev.maxmind.com. This is cached for 1 hour.
 
 
 ### Shortcode
@@ -33,12 +33,6 @@ Replace country code with the 2 digit country code.
 Add in one of the following custom CSS classes to the field you wish to pre-populate. The filters only work with the "text" and "dropdown" type classes.
 * .lsx-geo-ip
 * .lsx-geo-country
-* .lsx-geo-region
-* .lsx-geo-zip-code
-* .lsx-geo-metro-code
-* .lsx-geo-city
-* .lsx-geo-latitude
-* .lsx-geo-longitude
 
 
 ### Nav Menu Filters

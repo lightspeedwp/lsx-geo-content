@@ -2,7 +2,7 @@
 
 ### Description
 * Detect your IP address and the Protocol Version (v4 or v6) used.
-* Your location is the determined using the https://freegeoip.net/ site. This is cached for 1 hour.
+* Your country code  is then determined using the downloaded DB from https://dev.maxmind.com. This is cached for 1 hour.
 
 
 ### Shortcode
