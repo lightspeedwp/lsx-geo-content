@@ -8,5 +8,3 @@
  * @link
  * @copyright 2017 LightSpeed
  **/
-
-

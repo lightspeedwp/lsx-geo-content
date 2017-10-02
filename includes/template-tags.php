@@ -72,9 +72,11 @@ function lsx_geo_content_shortcode( $atts, $content = null ) {
 	$current_country = lsx_geo_get_user_meta( 'country_code' );
 
 	$return = '';
+
 	if ( in_array( $current_country, $countries ) || ( '' === $countries[0] && ! in_array( $current_country, $excludes ) ) ) {
 		$return = $data['opening_tag'] . $content . $data['closing_tag'];
 	}
+
 	return $return;
 }
 add_shortcode( 'geo_content', 'lsx_geo_content_shortcode' );
