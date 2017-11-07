@@ -40,6 +40,7 @@ class CF_Geo_Filters {
 	 */
 	public function __construct() {
 		add_filter( 'caldera_forms_render_get_field_type-text', array( $this, 'text_field_placeholder' ) );
+		add_filter( 'caldera_forms_render_get_field_type-hidden', array( $this, 'text_field_placeholder' ) );
 		add_filter( 'caldera_forms_render_get_field_type-dropdown', array( $this, 'dropdown_field_placeholder' ) );
 		$this->api_obj = \lsx\API_Lookup::init();
 	}
