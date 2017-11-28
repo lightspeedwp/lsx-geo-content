@@ -38,6 +38,7 @@ $classes = array(
 	'geo-settings',
 	'wpml-integration',
 	'geo-content',
+	'lsx-currencies-integration',
 );
 
 foreach ( $classes as $class ) {

@@ -9,6 +9,7 @@ use lsx\WPML_Integration;
 use lsx\Geo_Settings;
 use lsx\CF_Geo_Filters;
 use lsx\Geo_Nav_Filters;
+use lsx\LSX_Currencies_Integration;
 
 /**
  * Geo_Content Main Class
@@ -56,6 +57,9 @@ class Geo_Content {
 
 		//WP Nav Menu Filters
 		\lsx\Geo_Nav_Filters::init();
+
+		//LSX Currencies
+		\lsx\LSX_Currencies_Integration::init();
 
 		add_action( 'wp_before_admin_bar_render', array( $this, 'admin_bar_info_box' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'assets' ) );
