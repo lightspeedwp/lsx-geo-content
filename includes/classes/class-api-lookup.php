@@ -138,7 +138,7 @@ class API_Lookup {
 	 * @return boolean
 	 */
 	public function check_cloudfare() {
-		//This will eventually become a setting.
+		// This will eventually become a setting.
 		if ( ! empty( $_SERVER['HTTP_CF_IPCOUNTRY'] ) ) {
 			$country_code = sanitize_text_field( strtoupper( $_SERVER['HTTP_CF_IPCOUNTRY'] ) );
 			$this->parse_file_response( $country_code, 'cloudfare' );
@@ -153,7 +153,7 @@ class API_Lookup {
 	 * @return void
 	 */
 	public function contact_api() {
-		//This will eventually become a setting.
+		// This will eventually become a setting.
 		$service = 'freegeoip';
 		if ( false === $this->have_requested_before && isset( $this->apis[ $service ] ) ) {
 			$args = array(
@@ -173,12 +173,12 @@ class API_Lookup {
 	public function check_db_file() {
 		$country_code = false;
 		if ( '4' === $this->ip_obj->get_protocol_version() ) {
-			$this->file_obj = geoip_open( $this->data4,GEOIP_STANDARD );
+			$this->file_obj = geoip_open( $this->data4, GEOIP_STANDARD );
 			$country_code = geoip_country_code_by_addr( $this->file_obj, $this->ip_obj->get_ip() );
 			$this->maybe_log( 'file-check', esc_html__( 'Checking IP v4', 'lsx-geo-content' ) );
 			geoip_close( $this->file_obj );
 		} else {
-			$this->file_obj = geoip_open( $this->data6,GEOIP_STANDARD );
+			$this->file_obj = geoip_open( $this->data6, GEOIP_STANDARD );
 			$country_code = geoip_country_code_by_addr_v6( $this->file_obj, $this->ip_obj->get_ip() );
 			$this->maybe_log( 'file-check', esc_html__( 'Checking IP v6', 'lsx-geo-content' ) );
 			geoip_close( $this->file_obj );
@@ -194,10 +194,10 @@ class API_Lookup {
 	 */
 	public function parse_response( $response ) {
 		if ( ! is_wp_error( $response ) && '' !== $response ) {
-			$response_decoded = json_decode( $response , true );
+			$response_decoded = json_decode( $response, true );
 			if ( isset( $response_decoded['ip'] ) ) {
 				$this->location_data = $response_decoded;
-				set_transient( 'lsx_geo_ip_' . $response_decoded['ip'] , $response_decoded , 60 * 60 );
+				set_transient( 'lsx_geo_ip_' . $response_decoded['ip'], $response_decoded, 60 * 60 );
 				$this->have_requested_before = true;
 				$this->maybe_log( 'api-lookup', esc_html__( 'Location from API Request', 'lsx-geo-content' ) . '<pre>' . print_r( $response_decoded, true ) . '</pre>' );
 			}
@@ -221,7 +221,7 @@ class API_Lookup {
 				'country_name' => \lsx\Country_Codes::get_country_name( $country_code ),
 			);
 			$this->location_data = $data;
-			set_transient( 'lsx_geo_ip_' . $this->ip_obj->get_ip() , $data , 60 * 60 );
+			set_transient( 'lsx_geo_ip_' . $this->ip_obj->get_ip(), $data, 60 * 60 );
 			$this->maybe_log( $log_key, esc_html__( 'Location from ', 'lsx-geo-content' ) );
 		} else {
 			$this->maybe_log( $log_key, esc_html__( 'Search failed ', 'lsx-geo-content' ) );

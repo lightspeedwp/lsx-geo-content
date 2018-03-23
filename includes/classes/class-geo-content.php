@@ -40,25 +40,25 @@ class Geo_Content {
 	 */
 	public function __construct() {
 
-		//Load the User Details
+		// Load the User Details.
 		$this->api_lookup = \lsx\API_Lookup::init();
 
-		//Settings
+		// Settings.
 		\lsx\Geo_Settings::init();
 
-		//Load the variables
+		// Load the variables.
 		\lsx\Country_Codes::init();
 
-		//WPML Integration
+		// WPML Integration.
 		\lsx\WPML_Integration::init();
 
-		//Caldera Forms Integration
+		// Caldera Forms Integration.
 		\lsx\CF_Geo_Filters::init();
 
-		//WP Nav Menu Filters
+		// WP Nav Menu Filters.
 		\lsx\Geo_Nav_Filters::init();
 
-		//LSX Currencies
+		// LSX Currencies.
 		\lsx\LSX_Currencies_Integration::init();
 
 		add_action( 'wp_before_admin_bar_render', array( $this, 'admin_bar_info_box' ) );
@@ -128,7 +128,7 @@ class Geo_Content {
 	public function admin_bar_info_box() {
 		global $wp_admin_bar;
 		$wp_admin_bar->add_menu( array(
-			'parent' => 'my-account', // use 'false' for a root menu, or pass the ID of the parent menu
+			'parent' => 'my-account', // use 'false' for a root menu, or pass the ID of the parent menu.
 			'id' => 'user-geo-location', // link ID, defaults to a sanitized title value
 			'title' => esc_attr__( 'Location', 'lsx-geo-content' ), // link title
 			'href' => '', // name of file

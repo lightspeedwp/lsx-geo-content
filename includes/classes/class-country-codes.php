@@ -52,13 +52,13 @@ class Country_Codes {
 	 */
 	private function lookup() {
 
-		$response = get_option( 'lsx_geo_ip_country_data' , false );
+		$response = get_option( 'lsx_geo_ip_country_data', false );
 
 		if ( false === $response ) {
-			//This will eventually become a setting.
+			// This will eventually become a setting.
 			$service = 'countryio';
 			if ( isset( $this->apis[ $service ] ) ) {
-				$response = wp_safe_remote_get( $this->apis[ $service ] , array(
+				$response = wp_safe_remote_get( $this->apis[ $service ], array(
 					'timeout' => 2,
 				) );
 				$this->parse_response( $response );
@@ -74,10 +74,10 @@ class Country_Codes {
 	 */
 	private function parse_response( $response ) {
 		if ( ! is_wp_error( $response ) && $response['body'] ) {
-			$response_decoded = json_decode( $response['body'] , true );
+			$response_decoded = json_decode( $response['body'], true );
 			if ( false !== $response_decoded && '' !== $response_decoded ) {
 				asort( $response_decoded );
-				add_option( 'lsx_geo_ip_country_data' , $response_decoded );
+				add_option( 'lsx_geo_ip_country_data', $response_decoded );
 			}
 		}
 	}
@@ -90,7 +90,7 @@ class Country_Codes {
 	 */
 	public static function get_country_name( $country_code = '' ) {
 		$return = false;
-		$country_name = get_option( 'lsx_geo_ip_country_data' , false );
+		$country_name = get_option( 'lsx_geo_ip_country_data', false );
 		if ( '' !== $country_code && false !== $country_name ) {
 			if ( isset( $country_name[ $country_code ] ) ) {
 				$return = $country_name[ $country_code ];

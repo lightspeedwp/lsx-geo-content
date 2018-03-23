@@ -80,12 +80,12 @@ class Get_IP {
 			$ip = $_SERVER['REMOTE_ADDR'];
 		}
 
-		//Debug Helper for now.
+		// Debug Helper for now.
 		if ( isset( $_GET['ip'] ) ) {
 			$ip = $_GET['ip'];
 		}
 
-		// if ip contains commas, take first
+		// If ip contains commas, take first.
 		if ( strpos( $ip, ',' ) !== false ) {
 			$ip = explode( ',', $ip );
 			$ip = trim( $ip[0] );
