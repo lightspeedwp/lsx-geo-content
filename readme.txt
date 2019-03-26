@@ -1,9 +1,9 @@
 === LSX Geo Content ===
 Contributors: feedmymedia
 Donate link: https://www.lsdev.biz/product/to-team/
-Tags: LSX, LSX Theme, geo content, caldera forms, geo-targeting
+Tags: LSX Theme, Gutenberg, geo content, caldera forms, geo-targeting
 Requires at least: 4.3
-Tested up to: 4.9.4
+Tested up to: 5.1.1
 Requires PHP: 7.0
 Stable tag: 1.1.0
 License: GPLv3
@@ -13,16 +13,14 @@ The LSX Geo Content plugin detects your IP address and the Protocol Version (v4 
 == Description ==
 The LSX Geo Content plugin detects your IP address and the Protocol Version (v4 or v6) used. Your country code is then determined using the downloaded DB from https://dev.maxmind.com. This is cached for 1 hour.
 
-It is compatible with Caldera Forms plugin, as it allows to pre-populate content based not the location.
+It is compatible with Caldera Forms plugin, as it allows to pre-populate content based on the location.
 
 = Shortcode =
 You can use any of the following inside a WordPress editor, or a shortcode enabled field.
 
-```
-- [geo_content country="ZA"] You are in South Africa [/geo_content]
+``[geo_content country="ZA"] You are in South Africa [/geo_content]
 
-- [geo_content country="US"] You are in the US [/geo_content]
-```
+``[geo_content country="US"] You are in the US [/geo_content]
 
 = Template Tags =
 Replace country code with the 2 digit country code.
@@ -30,13 +28,10 @@ Replace country code with the 2 digit country code.
 -  United Kingdom = GB
 - South Africa = ZA
 
-```
-<?php
+``<?php
     if ( lsx_geo_is_country( $country_code ) ) {
         // Do code
-    }
-?>
-```
+    } ?>
 
 = Caldera Forms =
 Add in one of the following custom CSS classes to the field you wish to pre-populate. The filters only work with the "text" and "dropdown" type classes.
@@ -59,7 +54,7 @@ Firstly create a menu and assign it to a menu location.  You will add a custom l
 - .lsx-geo-ex-{country_code} e.g "lsx-geo-ex-us"
 
 = Works with the LSX Theme =
-Our theme [theme](https://www.lsdev.biz/product/lsx-wordpress-theme/) works perfectly with the Geo Content plugin.
+Our [theme](https://www.lsdev.biz/product/lsx-wordpress-theme/) works perfectly with the Geo Content plugin.
 
 = It's free, and always will be. =
 We’re firm believers in open source - that’s why we’re releasing the Geo Content plugin for free, forever.
@@ -78,7 +73,6 @@ We offer premium support for this plugin. Premium support that can be purchased 
 = Where can I find the Geo Content plugin documentation and user guides? =
 For help setting up and configuring the Geo Content plugin please refer to our [user guide](https://www.lsdev.biz/documentation/lsx/geo-content-extension/)
 = Where can I get support or talk to other users =
-If you get stuck, you can ask for help in the [to Search plugin forum](https://wordpress.org/support/plugin/lsx-geo-content).
 For help with add-ons from LightSpeed, see our support [package plan](https://www.lsdev.biz/website-packages/)
 = Will the Geo Content plugin work with my theme
 No; the Geo Content plugin will not work with any theme, it requires LSX Theme to make it match nicely. Please see our [codex](https://www.lsdev.biz/documentation/lsx/geo-content-extension/) for help.
