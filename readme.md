@@ -46,7 +46,7 @@ Firstly create a menu and assign it to a menu location.  You will add a custom l
 - .lsx-geo-ex-{country_code} e.g "lsx-geo-ex-us"
 
 ## Works with the LSX Theme
-Our [theme](https://www.lsdev.biz/product/lsx-wordpress-theme/) works perfectly with the Geo Content plugin.
+Our [theme](https://lsx.lsdev.biz/) works perfectly with the Geo Content plugin.
 
 ## It's free, and always will be.
 We’re firm believers in open source - that’s why we’re releasing the Geo Content plugin for free, forever.
