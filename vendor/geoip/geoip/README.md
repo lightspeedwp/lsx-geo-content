@@ -1,3 +1,19 @@
+<p align="center"><a target="_blank" href="https://lsx.lsdev.biz/"><img width="100px;" src="https://lsx.lsdev.biz/wp-content/uploads/2019/02/geolocate_550_x550_480.png" alt="LSX Geo Content Extension"></a>
+</p>
+<h1 align="center">LSX Geo Content</h1>
+
+<p align="center">
+	  <a href="https://www.gnu.org/licenses/gpl-3.0.en.html"><img src="https://poser.pugx.org/woocommerce/woocommerce/license" alt="license"></a>
+    <a href="http://gulpjs.com/"><img src="https://img.shields.io/badge/built%20with-gulp.js-green.svg" alt="Built with gulp.js"></a>
+  	<a href="https://travis-ci.org/github/lightspeeddevelopment/lsx-geo-content"><img src="https://travis-ci.org/lightspeeddevelopment/lsx-geo-content.svg?branch=master" alt="Build Status"></a>
+    <a href="https://lsx.lsdev.biz/"><img src="https://lsx.lsdev.biz/wp-content/uploads/2019/06/Designed-for-LSX-Theme-blue.png" alt="Made for LSX"></a>
+</p>
+
+Welcome to the [LSX Geo Content](https://lsx.lsdev.biz/documentation/lsx-geo-content/). The LSX Geo Content plugin detects your IP address and the Protocol Version (v4 or v6) used. Your country code is then determined using the downloaded DB from https://dev.maxmind.com. This is cached for 1 hour.
+
+It is compatible with Caldera Forms plugin, as it allows to pre-populate content based on the location.
+
+
 # MaxMind GeoIP Legacy PHP API #
 
 ## Important Note ##
@@ -103,3 +119,6 @@ version 2.1 or later.
 ## Thanks ##
 
 Thanks to Jim Winstead.
+
+## Like what you see?
+<a href="https://www.lsdev.biz/contact/"><img src="https://www.lsdev.biz/wp-content/uploads/2020/02/work-with-lightspeed.png" width="850" alt="Work with us at LightSpeed"></a>
