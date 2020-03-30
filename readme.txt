@@ -5,7 +5,7 @@ Tags: LSX Theme, Gutenberg, geo content, caldera forms, geo-targeting
 Requires at least: 4.3
 Tested up to: 5.4
 Requires PHP: 7.0
-Stable tag: 1.1.1
+Stable tag: 1.0.1
 License: GPLv3
 
 The LSX Geo Content plugin detects your IP address and the Protocol Version (v4 or v6) used. Your country code is then determined using the downloaded DB from https://dev.maxmind.com. This is cached for 1 hour.
