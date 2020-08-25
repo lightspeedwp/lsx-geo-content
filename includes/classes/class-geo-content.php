@@ -2,7 +2,6 @@
 
 namespace lsx;
 
-
 use lsx\API_Lookup;
 use lsx\Country_Codes;
 use lsx\WPML_Integration;
@@ -134,7 +133,7 @@ class Geo_Content {
 			'href' => '', // name of file
 			'meta' => array(
 				'html' => $this->generate_info_box(),
-				),
+			),
 		));
 	}
 

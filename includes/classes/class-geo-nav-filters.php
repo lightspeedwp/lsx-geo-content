@@ -90,7 +90,7 @@ class Geo_Nav_Filters {
 	 * Moves the current languages phone number to the top of the menu
 	 *
 	 * @param array $sorted_menu_items
-	 * @param array	$args
+	 * @param array $args
 	 *
 	 * @return array
 	 */

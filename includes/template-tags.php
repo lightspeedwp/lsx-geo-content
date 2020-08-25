@@ -2,9 +2,9 @@
 /**
  * Template Tags
  *
- * @package   		Geo_Content
- * @subpackage 		template-tags
- * @license   		GPL3
+ * @package         Geo_Content
+ * @subpackage      template-tags
+ * @license         GPL3
  */
 
 /**
@@ -21,12 +21,12 @@ function lsx_geo_content() {
 /**
  * Takes the given country code and checks to see if the user is currently located there
  *
- * @param		$country_code string
- * @return		boolean
+ * @param       $country_code string
+ * @return      boolean
  *
- * @package 	Geo_Content
- * @subpackage	template-tags
- * @category 	conditional
+ * @package     Geo_Content
+ * @subpackage  template-tags
+ * @category    conditional
  */
 function lsx_geo_is_country( $country_code = '' ) {
 	$geo_content = lsx_geo_content();
@@ -36,12 +36,12 @@ function lsx_geo_is_country( $country_code = '' ) {
 /**
  * Takes the given key and returns the string from the users location array
  *
- * @param 		$key string
- * @return		string
+ * @param       $key string
+ * @return      string
  *
- * @package 	Geo_Content
- * @subpackage	template-tags
- * @category 	helper
+ * @package     Geo_Content
+ * @subpackage  template-tags
+ * @category    helper
  */
 function lsx_geo_get_user_meta( $key ) {
 	$geo_content = lsx_geo_content();
@@ -51,13 +51,13 @@ function lsx_geo_get_user_meta( $key ) {
 /**
  * A shotcode to allow you to display certain content to certain people
  *
- * @param		$atts array
- * @param		$content string
- * @return		string
+ * @param       $atts array
+ * @param       $content string
+ * @return      string
  *
- * @package 	Geo_Content
- * @subpackage	template-tags
- * @category 	shortcode
+ * @package     Geo_Content
+ * @subpackage  template-tags
+ * @category    shortcode
  */
 function lsx_geo_content_shortcode( $atts, $content = null ) {
 	$data = shortcode_atts( array(

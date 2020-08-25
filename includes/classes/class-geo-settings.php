@@ -22,7 +22,7 @@ class Geo_Settings {
 	 * Constructor.
 	 */
 	public function __construct() {
-		add_filter( 'lsx_to_framework_settings_tabs', array( $this, 'settings_page_array' ) , 100 );
+		add_filter( 'lsx_to_framework_settings_tabs', array( $this, 'settings_page_array' ), 100 );
 	}
 
 	/**
@@ -45,9 +45,9 @@ class Geo_Settings {
 		$tabs['geo_content'] = array(
 			'page_title'        => false,
 			'page_description'  => false,
-			'menu_title'        => __( 'Geo Content' ,'lsx-geo-content' ),
+			'menu_title'        => __( 'Geo Content', 'lsx-geo-content' ),
 			'template'          => LSX_GEO_PATH . 'includes/partials/geo-content.php',
-			'default'	 		=> false,
+			'default'           => false,
 		);
 		return $tabs;
 	}

@@ -22,7 +22,7 @@ class LSX_Currencies_Integration {
 	 * Constructor.
 	 */
 	public function __construct() {
-		add_filter( 'lsx_currencies_base_currency', array( $this, 'set_user_location' ),10 , 2 );
+		add_filter( 'lsx_currencies_base_currency', array( $this, 'set_user_location' ), 10, 2 );
 	}
 
 	/**
