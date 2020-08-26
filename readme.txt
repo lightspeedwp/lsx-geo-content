@@ -2,9 +2,9 @@
 Contributors: feedmymedia, lightspeedwp, eleshar, krugazul, virginialsdev, deon80, jaab1985, jacquesvdh, ignusvermaak, garthlsdev
 Donate link: https://donate.lsdev.biz/
 Tags: lsx, geo content, geo-targeting
-Requires at least: 5.2
+Requires at least: 5.3
 Tested up to: 5.5
-Requires PHP: 7.2 or later
+Requires PHP: 7.2
 Stable tag: 1.0.1
 
 The LSX Geo Content plugin detects your IP address and the Protocol Version (v4 or v6) used. Your country code is then determined using the downloaded DB from https://dev.maxmind.com. This is cached for 1 hour.
