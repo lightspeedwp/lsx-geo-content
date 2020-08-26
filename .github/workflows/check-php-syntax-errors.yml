@@ -1,6 +1,5 @@
-- name: Check PHP syntax errors
-
-  uses: overtrue/phplint@2.0.2
+name: Check PHP syntax errors
+uses: overtrue/phplint@2.0.2
   with:
     # path to check
     path: # optional, default is .
